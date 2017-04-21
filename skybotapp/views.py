@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 # yomamabot/fb_yomamabot/views.py
 from django.views import generic
 from django.http.response import HttpResponse
