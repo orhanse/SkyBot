@@ -1,4 +1,7 @@
 import json
+import requests
+import pprint
+
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -6,7 +9,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views import generic
 from django.http.response import HttpResponse
 # Create your views here.
-
 
 def post_facebook_message(fbid, recevied_message):           
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=<page-access-token>' 
