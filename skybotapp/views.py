@@ -4,6 +4,7 @@ import pprint
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+
 # yomamabot/fb_yomamabot/views.py
 from django.views import generic
 from django.http.response import HttpResponse
@@ -18,8 +19,8 @@ def post_facebook_message(fbid, recevied_message):
 
 class SkyBotView(generic.View):
     def get(self, request, *args, **kwargs):
-        if self.request.__getitem__('hub.verify_token') == '20170421':
-            return HttpResponse(self.request.__getitem__('hub.challenge'))
+        if self.request.GET['hub.verify_token'].__getitem__() == '20170421':
+            return HttpResponse(self.request.GET['hub.challenge']).__getitem__()
         else:
             return HttpResponse('Error, invalid token')
 
