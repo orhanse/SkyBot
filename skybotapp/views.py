@@ -5,6 +5,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views import generic
 from django.http.response import HttpResponse
 # Create your views here.
+
+
+def post_facebook_message(fbid, recevied_message):           
+    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=<page-access-token>' 
+    response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":recevied_message}})
+    status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
+    pprint(status.json())
+
+
 class SkyBotView(generic.View):
     def get(self, request, *args, **kwargs):
         if self.request.GET['hub.verify_token'] == '20170421':
@@ -27,7 +36,8 @@ class SkyBotView(generic.View):
                 # This might be delivery, optin, postback for other events 
                 if 'message' in message:
                     # Print the message to the terminal
-                    pprint(message)     
+                    pprint(message)
+                    post_facebook_message(message['sender']['id'], message['message']['text'])     
         return HttpResponse()
 
 
