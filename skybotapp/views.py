@@ -19,8 +19,8 @@ def post_facebook_message(fbid, recevied_message):
 
 class SkyBotView(generic.View):
     def get(self, request, *args, **kwargs):
-        if self.request.GET['hub.verify_token'].__getitem__() == '20170421':
-            return HttpResponse(self.request.GET['hub.challenge']).__getitem__()
+        if self.request.__getitem__('hub.verify_token') == '20170421':
+            return HttpResponse(self.request.__getitem__('hub.verify_token'))
         else:
             return HttpResponse('Error, invalid token')
 
