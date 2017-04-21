@@ -11,3 +11,6 @@ class SkyBotView(generic.View):
             return HttpResponse('Error, invalid token')
       
 
+@method_decorator(csrf_exempt)
+def dispatch(self, request, *args, **kwargs):
+    return generic.View.dispatch(self, request, *args, **kwargs)
