@@ -5,4 +5,9 @@ from django.http.response import HttpResponse
 # Create your views here.
 class SkyBotView(generic.View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse("Hello World!")
+        if self.request.GET['hub.verify_token'] == '20170421':
+            return HttpResponse(self.request.GET['hub.challenge'])
+        else:
+            return HttpResponse('Error, invalid token')
+      
+
