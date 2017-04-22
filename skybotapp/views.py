@@ -4,7 +4,7 @@ from pprint import pprint
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
+from wit import wit
 # yomamabot/fb_yomamabot/views.py
 from django.views import generic
 from django.http.response import HttpResponse
@@ -25,15 +25,16 @@ class SkyBotView(generic.View):
       #  else:
        #     return HttpResponse('Error, invalid token')
 
-
-
-
-
-
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return generic.View.dispatch(self, request, *args, **kwargs)
 
+
+
+    actions = {
+        'send': send,
+        'my_action': my_action,
+        }
     # Post function to handle Facebook messages
     def post(self, request, *args, **kwargs):
         # Converts the text payload into a python dictionary
@@ -46,14 +47,26 @@ class SkyBotView(generic.View):
                 # This might be delivery, optin, postback for other events 
                 if 'message' in message:
                     # Print the message to the terminal
-                    
+
+                    client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC' , actions=actions, logger=custom_logger)
+                    resp = client.message(incoming_message)
+                    print('Yay, got Wit.ai response: ' + str(resp))
                     pprint(message)
-                    post_facebook_message(message['sender']['id'], message['message']['text'])     
+                  #  post_facebook_message(message['sender']['id'], message['message']['text'])     
         return HttpResponse()
 
 
 
 def homeView(request):
     return HttpResponse('Hello')
+
+
+
+#actions = {
+#    'send': send,
+#    'my_action': my_action,
+#}
+
+
 
 
