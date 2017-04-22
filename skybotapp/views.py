@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 # yomamabot/fb_yomamabot/views.py
 from django.views import generic
 from django.http.response import HttpResponse
+from django.template.context_processors import request
 # Create your views here.
 
 def post_facebook_message(fbid, recevied_message):           
@@ -49,5 +50,10 @@ class SkyBotView(generic.View):
                     pprint(message)
                     post_facebook_message(message['sender']['id'], message['message']['text'])     
         return HttpResponse()
+
+
+
+def homeView(request):
+    return HttpResponse('Hello')
 
 

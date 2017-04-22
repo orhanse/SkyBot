@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from .views import SkyBotView
+from . import views
+
 
 urlpatterns = [
 
     url(r'^c89d7714bc16a002df7a7ff845ab159293c2f54424d52bbe16/?$',SkyBotView.as_view()),
+    url(r'^$',views.homeView),
 ]
