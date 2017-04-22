@@ -19,5 +19,4 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^skybotapp/', include('skybotapp.urls')),
-    url(r'^skyscanner/',include('skyscanner.urls')),
 ]
