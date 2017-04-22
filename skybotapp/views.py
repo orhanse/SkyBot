@@ -18,6 +18,24 @@ def post_facebook_message(fbid, recevied_message):
     pprint(status.json())
 
 
+def send(request, response):
+    pprint('Sending to user...', response['text'])
+def my_action(request):
+    pprint('Received from user...', request['text'])
+
+    actions = {
+     'send': send,
+      'my_action': my_action,
+        }
+
+def witConnect(incoming_message):    
+    client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
+    resp = client.message(incoming_message)
+    pprint('Yay, got Wit.ai response: ' + str(resp))
+    return resp
+
+
+
 class SkyBotView(generic.View):
    # def get(self, request, *args, **kwargs):
     #    if self.request.GET['hub.verify_token'] == '93985762':
@@ -31,14 +49,6 @@ class SkyBotView(generic.View):
 
 
 
-    def send(request, response):
-        pprint('Sending to user...', response['text'])
-    def my_action(request):
-        pprint('Received from user...', request['text'])
-
-
-    
-
     # Post function to handle Facebook messages
     def post(self, request, *args, **kwargs):
         # Converts the text payload into a python dictionary
@@ -51,19 +61,15 @@ class SkyBotView(generic.View):
                 # This might be delivery, optin, postback for other events 
                 if 'message' in message:
                     # Print the message to the terminal
-                    actions = {
-                        'send': send,
-                        'my_action': my_action,
-                        }
-                    client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
-                    resp = client.message(incoming_message)
-                    print('Yay, got Wit.ai response: ' + str(resp))
+
                     pprint(message)
-                  #  post_facebook_message(message['sender']['id'], message['message']['text'])     
+                    resp=witConnect(incoming_message)
+                    
+                    post_facebook_message(message['sender']['id'],str(resp) )     
         return HttpResponse()
 
 
-
+#message['message']['text']
 
 
 
