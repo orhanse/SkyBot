@@ -64,7 +64,7 @@ class SkyBotView(generic.View):
                     # Print the message to the terminal
 
                     pprint(message)
-                    resp=witConnect('message')
+                    resp=witConnect(message['message']['text'])
                     
                     post_facebook_message(message['sender']['id'],str(resp) )     
         return HttpResponse()
