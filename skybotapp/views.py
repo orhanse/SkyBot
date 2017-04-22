@@ -36,10 +36,7 @@ class SkyBotView(generic.View):
     def my_action(request):
         pprint('Received from user...', request['text'])
 
-    actions = {
-    'send': send,
-    'my_action': my_action,
-    }
+
     
 
     # Post function to handle Facebook messages
@@ -54,6 +51,10 @@ class SkyBotView(generic.View):
                 # This might be delivery, optin, postback for other events 
                 if 'message' in message:
                     # Print the message to the terminal
+                    actions = {
+                        'send': send,
+                        'my_action': my_action,
+                        }
                     client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
                     resp = client.message(incoming_message)
                     print('Yay, got Wit.ai response: ' + str(resp))
