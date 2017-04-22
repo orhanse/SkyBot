@@ -23,12 +23,13 @@ def send(request, response):
 def my_action(request):
     pprint('Received from user...', request['text'])
 
-    actions = {
-     'send': send,
-      'my_action': my_action,
-        }
 
-def witConnect(incoming_message):    
+
+def witConnect(incoming_message):  
+    actions = {
+        'send': send,
+        'my_action': my_action,
+    }  
     client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
     resp = client.message(incoming_message)
     pprint('Yay, got Wit.ai response: ' + str(resp))
