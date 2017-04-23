@@ -74,7 +74,7 @@ class SkyBotView(generic.View):
                     resp=witConnect(message['message']['text'])
                     strResp = parseWitData(resp)
                      
-                    post_facebook_message(message['sender']['id'],strResp)     
+                    post_facebook_message(message['sender']['id'],str(strResp))     
         return HttpResponse()
    
    
