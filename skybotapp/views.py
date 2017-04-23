@@ -74,7 +74,7 @@ class SkyBotView(generic.View):
                     resp=witConnect(message['message']['text'])
                     strResp = parseWitData(resp)
                      
-                    post_facebook_message(message['sender']['id'],str(strResp) )     
+                    post_facebook_message(message['sender']['id'],strResp)     
         return HttpResponse()
    
    
@@ -84,14 +84,14 @@ def parseWitData(witOut):
     lenoflog = 0
     if 'location' in witOut['entities']:
         if 'source' in scannerInput is not 'jamiryo':
-            scannerInput['destination']=(witOut['entities']['location'][0]['value'])
+            scannerInput['destination']=witOut['entities']['location'][0]['value']
         else:
-            scannerInput['source']=(witOut['entities']['location'][0]['value'])
+            scannerInput['source']=witOut['entities']['location'][0]['value']
             lenofloc = len(witOut['entities']['location'])
     if lenofloc == 2:
-        scannerInput['destination']=(witOut['entities']['location'][1]['value'])
+        scannerInput['destination']=witOut['entities']['location'][1]['value']
     if 'datetime' in witOut['entities']:
-       scannerInput['datetime']=(witOut['entities']['datetime'][0]['value'])   
+       scannerInput['datetime']=witOut['entities']['datetime'][0]['value']   
     
     if 'source' in scannerInput is 'jamiryo':
         return 'I couldnt find any location info in your message. Please enter your flight "from x to y'
