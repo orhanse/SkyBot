@@ -29,7 +29,7 @@ def witConnect(incoming_message):
         'send': send,
         'my_action': my_action,
     }  
-    client = Wit(access_token='DJE4HFOBMAJO6DMIC2IEZRP5DDRQRZKS', actions=actions)
+    client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
     try:
         resp = client.message(incoming_message)
         pprint('Yay, got Wit.ai response: ' + str(resp))
@@ -38,7 +38,7 @@ def witConnect(incoming_message):
         pprint('WIT.AI ERROR')
     
 #KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC
-    
+#turgut DJE4HFOBMAJO6DMIC2IEZRP5DDRQRZKS    
 
 
 class SkyBotView(generic.View):
