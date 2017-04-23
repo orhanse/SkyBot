@@ -79,19 +79,19 @@ class SkyBotView(generic.View):
    
    
     
-scannerInput = json.dumps({'source': 'jamiryo', 'destination': 'jamiryo','datetime':'jamiryo'})
+scannerInput = json.dumps({"source": 'jamiryo', "destination": 'jamiryo',"datetime1":'jamiryo',"datetime2":'jamiryo'})
 def parseWitData(witOut):
     lenoflog = 0
     if 'location' in witOut['entities']:
         if 'source' in scannerInput is not 'jamiryo':
-            scannerInput['destination']=str(witOut['entities']['location'][0]['value'])
+            scannerInput["destination"]=str(witOut['entities']['location'][0]['value'])
         else:
-            scannerInput['source']=str(witOut['entities']['location'][0]['value'])
+            scannerInput["source"]=str(witOut['entities']['location'][0]['value'])
             lenofloc = len(witOut['entities']['location'])
     if lenofloc == 2:
-        scannerInput['destination']=str(witOut['entities']['location'][1]['value'])
+        scannerInput["destination"]=str(witOut['entities']['location'][1]['value'])
     if 'datetime' in witOut['entities']:
-       scannerInput['datetime']=str(witOut['entities']['datetime'][0]['value'])   
+       scannerInput["datetime"]=str(witOut['entities']['datetime'][0]['value'])   
     
     if 'source' in scannerInput is 'jamiryo':
         return 'I couldnt find any location info in your message. Please enter your flight "from x to y'
