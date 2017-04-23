@@ -79,10 +79,11 @@ class SkyBotView(generic.View):
 
 def parseWitData(witOut):
     scannerInput = []
-    lenofloc = len(witOut['entities']['location'])
+    
     
     if witOut['entities']['location']!= None:
         scannerInput.append(witOut['entities']['location'][0]['value'])
+        lenofloc = len(witOut['entities']['location'])
     else:
         return 'I couldnt find any location info in your message. Please enter your flight "from x to y"'
     if lenofloc == 2:
