@@ -21,8 +21,7 @@ def send(request, response):
     pprint('Sending to user...', response['text'])
 def my_action(request):
     pprint('Received from user...', request['text'])
-
-
+    
 
 def witConnect(incoming_message):  
     actions = {
@@ -32,9 +31,10 @@ def witConnect(incoming_message):
     client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
     client.interactive()
     try:
-        client.__run_actions(post_facebook_message(fbid, incoming_message))
-        #resp = client.message(incoming_message)
+        #client.__run_actions('session id', incoming_message)
+        resp = client.message(incoming_message)
         #resp= client.converse('session id', incoming_message)
+       
         pprint('Yay, got Wit.ai response: ' + str(resp))
         return resp
     except:
@@ -73,7 +73,7 @@ class SkyBotView(generic.View):
                     pprint(message)
                     resp=witConnect(message['message']['text'])
                     
-                   # post_facebook_message(message['sender']['id'],str(resp) )     
+                    post_facebook_message(message['sender']['id'],str(resp) )     
         return HttpResponse()
 
 
