@@ -17,10 +17,13 @@ def flight(request):
     if len(data['Quotes'])==0:  # Bu parametrelere uyan bir ucus yok.
         result=None
         HttpResponse(result)
+        
     if 'Inbound' in data['Quotes'][0]:
         roundtrip=True
     else:
         roundtrip=False
+    
+        
     result['price']=data['Quotes'][0]['MinPrice']
     result['out']['date']=data['Quotes'][0]['OutboundLeg']['DepartureDate']
     if roundtrip == True:
