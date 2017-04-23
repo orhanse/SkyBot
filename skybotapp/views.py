@@ -70,12 +70,12 @@ class SkyBotView(generic.View):
                     pprint(message)
                     resp=witConnect(message['message']['text'])
                     
-                    post_facebook_message(message['sender']['id'],resp['entities']['location'][0]['value'] )     
+                    post_facebook_message(message['sender']['id'],str(resp) )     
         return HttpResponse()
 
 
 #message['message']['text']
-
+#resp['entities']['location'][0]['value']
 
 
 def homeView(request):
