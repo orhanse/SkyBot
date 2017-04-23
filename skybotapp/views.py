@@ -83,7 +83,7 @@ scannerInput = json.loads('{"source": "jamiryo", "destination": "jamiryo","datet
 def parseWitData(witOut):
     lenofloc=0
     if 'location' in witOut['entities']:
-        if scannerInput["source"] is "jamiryo":
+        if scannerInput["source"] == "jamiryo":
             scannerInput["source"]=str(witOut['entities']['location'][0]['value'])
         else:
             scannerInput["destination"]=str(witOut['entities']['location'][0]['value'])
@@ -94,11 +94,11 @@ def parseWitData(witOut):
     if 'datetime' in witOut['entities']:
        scannerInput["datetime1"]=str(witOut['entities']['datetime'][0]['value'])   
     
-    if  scannerInput["source"] is "jamiryo":
+    if  scannerInput["source"] == "jamiryo":
         return 'I couldnt find any location info in your message. Please enter your flight "from x to y'
-    if  scannerInput["destination"] is "jamiryo":
+    if  scannerInput["destination"] == "jamiryo":
         return 'Please enter the destination'
-    if  scannerInput["datetime1"]  is "jamiryo":
+    if  scannerInput["datetime1"]  == "jamiryo":
         return 'Please enter the datetime'
     
     return scannerInput
