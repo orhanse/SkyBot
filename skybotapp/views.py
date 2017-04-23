@@ -95,8 +95,8 @@ def parseWitData(witOut):
     if witOut['entities']['datetime'][0]['values'][0]!= None:
        scannerInput.append(witOut['entities']['datetime'][0]['values'][0]['value'])
         
-    if witOut['entities']['datetime'][1]['values'][0]!= None:
-        scannerInput.append(witOut['entities']['datetime'][1]['values'][0]['value'])   
+    if witOut['entities']['datetime'][0]['values'][1]!= None:
+        scannerInput.append(witOut['entities']['datetime'][0]['values'][1]['value'])   
     return scannerInput
 
 def homeView(request):
