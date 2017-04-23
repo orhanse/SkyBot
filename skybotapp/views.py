@@ -92,11 +92,11 @@ def parseWitData(witOut):
     else:
         return 'I couldnt find your destination location info in your message. Please enter your flight "from x to y"'
     
-    if witOut['entities']['datetime'][0]['values'][0]!= None:
-       scannerInput.append(witOut['entities']['datetime'][0]['values'][0]['value'])
+    if witOut['entities']['datetime']['value']!= None:
+       scannerInput.append(witOut['entities']['datetime']['value'])
         
-    if witOut['entities']['datetime'][0]['values'][1]!= None:
-        scannerInput.append(witOut['entities']['datetime'][0]['values'][1]['value'])   
+    if witOut['entities']['datetime']['value']!= None:
+        scannerInput.append(witOut['entities']['datetime']['value'])   
     return scannerInput
 
 def homeView(request):
