@@ -81,7 +81,7 @@ class SkyBotView(generic.View):
     
 scannerInput = json.loads('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')
 def parseWitData(witOut):
-    lenoflog = 0
+    lenofloc=0
     if 'location' in witOut['entities']:
         if 'source' in scannerInput is not 'jamiryo':
             scannerInput["destination"]=str(witOut['entities']['location'][0]['value'])
