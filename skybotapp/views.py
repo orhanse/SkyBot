@@ -107,7 +107,10 @@ def parseWitData(witOut):
 
         return 'Please enter the datetime'
     result = scannerInput
-    del scannerInput
+    scannerInput["source"] = "jamiryo"
+    scannerInput["destination"] = "jamiryo"
+    scannerInput["datetime1"] = "jamiryo"
+    scannerInput["datetime2"] = "jamiryo"
     return result
     
 
