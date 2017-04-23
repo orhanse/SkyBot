@@ -78,16 +78,12 @@ class SkyBotView(generic.View):
         return HttpResponse()
 
 
-missingInfo = json.loads('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')
-flag = False
-  
+#missingInfo = json.loads('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')
+#flag = False
+scannerInput = json.loads('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')  
     
 def parseWitData(witOut):
-    global missingInfo
-    global flag
-    scannerInput = json.loads('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')
-    if flag == True:
-        scannerInput=missingInfo
+    
     lenofloc=0
     if 'location' in witOut['entities']:
         if scannerInput["source"] == "jamiryo":
@@ -100,19 +96,19 @@ def parseWitData(witOut):
             scannerInput["destination"]=str(witOut['entities']['location'][1]['value'])
     if 'datetime' in witOut['entities']:
        scannerInput["datetime1"]=str(witOut['entities']['datetime'][0]['value'])   
-    flag = True
+
     if  scannerInput["source"] == "jamiryo":
-        missingInfo=scannerInput
+
         return 'I couldnt find any location info in your message. Please enter your flight "from x to y'
     if  scannerInput["destination"] == "jamiryo":
-        missingInfo=scannerInput
+
         return 'Please enter the destination'
     if  scannerInput["datetime1"]  == "jamiryo":
-        missingInfo=scannerInput
-        return 'Please enter the datetime'
-    flag = False
 
-    return scannerInput
+        return 'Please enter the datetime'
+    result = scannerInput
+    del scannerInput
+    return result
     
 
 
