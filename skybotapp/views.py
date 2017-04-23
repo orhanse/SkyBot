@@ -72,14 +72,32 @@ class SkyBotView(generic.View):
 
                     pprint(message)
                     resp=witConnect(message['message']['text'])
-                    
-                    post_facebook_message(message['sender']['id'],str(resp) )     
+                    strResp = parseWitData(resp)
+                    post_facebook_message(message['sender']['id'],strResp )     
         return HttpResponse()
 
 
 #message['message']['text']
 #resp['entities']['location'][0]['value']
 
+def parseWitData(witOut):
+    scannerInput = []
+    if witOut['location'][0]['value']!= None:
+        scannerInput[0] = witOut['location'][0]['value']
+    else:
+        return 'I couldnt find any location info in your message. Please enter your flight "from x to y"'
+    
+    if witOut['location'][1]['value']!= None:
+        scannerInput[1] = witOut['location'][1]['value']
+    else:
+        return 'I couldnt find your destination location info in your message. Please enter your flight "from x to y"'
+    
+    if witOut['datetime'][0]['value']!= None:
+        scannerInput[2] = witOut['datetime'][0]['value']
+        
+    if witOut['datetime'][1]['value']!= None:
+        scannerInput[2] = witOut['datetime'][1]['value']   
+    return scannerInput
 
 def homeView(request):
     return HttpResponse('Hello')
