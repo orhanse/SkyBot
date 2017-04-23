@@ -76,26 +76,30 @@ class SkyBotView(generic.View):
                      
                     post_facebook_message(message['sender']['id'],str(strResp) )     
         return HttpResponse()
-
+   
+   
+    
+scannerInput = json.dumps({'source': 'jamiryo', 'destination': 'jamiryo','datetime':'jamiryo'})
 def parseWitData(witOut):
-    scannerInput = []
-    
-
+    lenoflog = 0
     if 'location' in witOut['entities']:
-        scannerInput.append(witOut['entities']['location'][0]['value'])
-        lenofloc = len(witOut['entities']['location'])
-    else:
-        return 'I couldnt find any location info in your message. Please enter your flight "from x to y"'
-    if lenofloc == 2:
-        if witOut['entities']['location'][1]!= None:
-            scannerInput.append(witOut['entities']['location'][1]['value'])
+        if scannerInput['source']!='jamiryo':
+            scannerInput['destination']=(witOut['entities']['location'][0]['value'])
         else:
-            return 'I couldnt find your destination location info in your message. Please enter your flight "from x to y"'
-    
+            scannerInput['source']=(witOut['entities']['location'][0]['value'])
+            lenofloc = len(witOut['entities']['location'])
+    if lenofloc == 2:
+        scannerInput['destination']=(witOut['entities']['location'][1]['value'])
     if 'datetime' in witOut['entities']:
-       scannerInput.append(witOut['entities']['datetime'][0]['value'])   
- #   if witOut['entities']['datetime'][1]!= None:
-  #      scannerInput.append(witOut['entities']['datetime'][0]['value'])   
+       scannerInput['datetime']=(witOut['entities']['datetime'][0]['value'])   
+    
+    if scannerInput['source']=='jamiryo':
+        return 'I couldnt find any location info in your message. Please enter your flight "from x to y'
+    if scannerInput['destination']=='jamiryo':
+        return 'Please enter the destination'
+    if scannerInput['datetime']=='jamiryo':
+        return 'Please enter the datetime'
+    
     return scannerInput
     
 
