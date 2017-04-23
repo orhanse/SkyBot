@@ -31,8 +31,9 @@ def witConnect(incoming_message):
     }  
     client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
     try:
-        client.__run_actions('session id', incoming_message)
-        resp = client.message(incoming_message)
+        #client.__run_actions('session id', incoming_message)
+        #resp = client.message(incoming_message)
+        resp= client.converse('session id', incoming_message)
         pprint('Yay, got Wit.ai response: ' + str(resp))
         return resp
     except:
