@@ -82,20 +82,20 @@ class SkyBotView(generic.View):
 
 def parseWitData(witOut):
     scannerInput = []
-    if witOut['entities']['location'][0]['value']!= None:
+    if witOut['entities']['location'][0]!= None:
         scannerInput.append(witOut['entities']['location'][0]['value'])
     else:
         return 'I couldnt find any location info in your message. Please enter your flight "from x to y"'
     
-    if witOut['entities']['location'][1]['value']!= None:
+    if witOut['entities']['location'][1]!= None:
         scannerInput.append(witOut['entities']['location'][1]['value'])
     else:
         return 'I couldnt find your destination location info in your message. Please enter your flight "from x to y"'
     
-    if witOut['entities']['datetime'][0]['value']!= None:
+    if witOut['entities']['datetime'][0]!= None:
        scannerInput.append(witOut['entities']['datetime'][0]['value'])
         
-    if witOut['entities']['datetime'][1]['value']!= None:
+    if witOut['entities']['datetime'][1]!= None:
         scannerInput.append(witOut['entities']['datetime'][1]['value'])   
     return scannerInput
 
