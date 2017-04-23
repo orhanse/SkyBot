@@ -43,3 +43,12 @@ def flight(request):
             result['in']['carrier'] = data['Carriers'][i]['Name']
             
     return HttpResponse(str(result))
+
+
+def id_finder(place):
+    result=requests.get('http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/tr/TRY/en-US?query='+place+'&apiKey=sk183163813532396485407386558735')
+    record=result.json()
+    if(len(record['Places'])==0): # boyle bir yer var mi?
+        return None
+    name=record['Places'][0]['PlaceId']
+    return str(name)
