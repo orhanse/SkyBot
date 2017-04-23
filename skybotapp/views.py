@@ -83,6 +83,7 @@ flag = False
   
     
 def parseWitData(witOut):
+    global missingInfo
     global flag
     scannerInput = json.loads('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')
     if flag == True:
