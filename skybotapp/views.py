@@ -108,7 +108,7 @@ def parseWitData(witOut):
     if  scannerInput["datetime1"]  == "jamiryo":
 
         return 'Please enter the datetime'
-    result = copy.deepcopy(scannerInput)
+    result = copy.copy(scannerInput)
     scannerInput["source"] = "jamiryo"
     scannerInput["destination"] = "jamiryo"
     scannerInput["datetime1"] = "jamiryo"
