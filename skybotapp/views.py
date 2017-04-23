@@ -91,13 +91,13 @@ def parseWitData(witOut):
     if lenofloc == 2:
         scannerInput["destination"]=str(witOut['entities']['location'][1]['value'])
     if 'datetime' in witOut['entities']:
-       scannerInput["datetime"]=str(witOut['entities']['datetime'][0]['value'])   
+       scannerInput["datetime1"]=str(witOut['entities']['datetime'][0]['value'])   
     
-    if 'source' in scannerInput is 'jamiryo':
+    if  scannerInput["source"] is "jamiryo":
         return 'I couldnt find any location info in your message. Please enter your flight "from x to y'
-    if 'destination' in scannerInput is 'jamiryo':
+    if  scannerInput["destination"] is "jamiryo":
         return 'Please enter the destination'
-    if 'datetime' in scannerInput is 'jamiryo':
+    if  scannerInput["datetime1"]  is "jamiryo":
         return 'Please enter the datetime'
     
     return scannerInput
