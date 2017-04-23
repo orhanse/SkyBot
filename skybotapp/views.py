@@ -80,8 +80,8 @@ class SkyBotView(generic.View):
 def parseWitData(witOut):
     scannerInput = []
     
-    
-    if witOut['entities']['location']:
+
+    if 'location' in witOut['entities']:
         scannerInput.append(witOut['entities']['location'][0]['value'])
         lenofloc = len(witOut['entities']['location'])
     else:
