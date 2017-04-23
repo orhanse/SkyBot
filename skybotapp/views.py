@@ -83,7 +83,7 @@ scannerInput = json.loads('{"source": "jamiryo", "destination": "jamiryo","datet
 def parseWitData(witOut):
     lenofloc=0
     if 'location' in witOut['entities']:
-        if 'source' in scannerInput is not 'jamiryo':
+        if scannerInput["source"] is not "jamiryo":
             scannerInput["destination"]=str(witOut['entities']['location'][0]['value'])
         else:
             scannerInput["source"]=str(witOut['entities']['location'][0]['value'])
