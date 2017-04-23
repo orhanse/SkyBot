@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'skybotapp',
+    'skyscannerapp'
 ]
 
 MIDDLEWARE = [
