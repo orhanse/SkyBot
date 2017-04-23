@@ -5,7 +5,6 @@ from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from wit import Wit
-# yomamabot/fb_yomamabot/views.py
 from django.views import generic
 from django.http.response import HttpResponse
 from django.template.context_processors import request
@@ -39,6 +38,7 @@ def witConnect(incoming_message):
         pprint('WIT.AI ERROR')
     
 
+    
 
 
 class SkyBotView(generic.View):
@@ -70,7 +70,7 @@ class SkyBotView(generic.View):
                     pprint(message)
                     resp=witConnect(message['message']['text'])
                     
-                    post_facebook_message(message['sender']['id'],str(resp) )     
+                    post_facebook_message(message['sender']['id'],resp['location'][0]['value'] )     
         return HttpResponse()
 
 
