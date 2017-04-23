@@ -30,6 +30,7 @@ def witConnect(incoming_message):
         'my_action': my_action,
     }  
     client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
+    client.interactive()
     try:
         resp = client.message(incoming_message)
         pprint('Yay, got Wit.ai response: ' + str(resp))
