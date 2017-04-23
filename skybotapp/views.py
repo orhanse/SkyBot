@@ -98,15 +98,15 @@ def parseWitData(witOut):
        scannerInput["datetime1"]=str(witOut['entities']['datetime'][0]['value'])   
 
     if  scannerInput["source"] == "jamiryo":
-
-        return 'I couldnt find any location info in your message. Please enter your flight "from x to y'
+        post_facebook_message(message['sender']['id'],'I couldnt find any location info in your message. Please enter your flight "from x to y') 
+ 
     if  scannerInput["destination"] == "jamiryo":
 
         return 'Please enter the destination'
     if  scannerInput["datetime1"]  == "jamiryo":
 
         return 'Please enter the datetime'
-    result = scannerInput
+    result = json.loads(str(scannerInput))
     scannerInput["source"] = "jamiryo"
     scannerInput["destination"] = "jamiryo"
     scannerInput["datetime1"] = "jamiryo"
