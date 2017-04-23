@@ -81,7 +81,7 @@ def parseWitData(witOut):
     scannerInput = []
     
     
-    if witOut['entities']['location']!= None:
+    if witOut['entities']['location']:
         scannerInput.append(witOut['entities']['location'][0]['value'])
         lenofloc = len(witOut['entities']['location'])
     else:
