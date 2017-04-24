@@ -120,7 +120,6 @@ def parseWitData(witOut):
                     array[3] = str(witOut['entities']['datetime'][0]['values'][0]['from']['value'])
                 else:
                     array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])  
-                    return 'Please enter return date again' 
             #elif lent ==1:
             else:
                 array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])
@@ -130,7 +129,7 @@ def parseWitData(witOut):
             return 'Please enter the destination'
         if array[2] == 'j':
             return 'Please enter the time you want to fly'
-    
+        pprint(str(array))
         return array
     
                     
