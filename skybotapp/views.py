@@ -69,10 +69,10 @@ class SkyBotView(generic.View):
                     # Print the message to the terminal
 
                     pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
-                    resp=witConnect(message['message']['text'])
-                    strResp = parseWitData(resp)
-                     
-                    post_facebook_message(message['sender']['id'],str(strResp))     
+                    if message['sender']['id'] != '1884352301811482':
+                        resp=witConnect(message['message']['text'])
+                        strResp = parseWitData(resp)
+                        post_facebook_message(message['sender']['id'],str(strResp))     
         return HttpResponse()
 
 
