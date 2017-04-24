@@ -19,20 +19,25 @@ def post_facebook_message(fbid, recevied_message):
 
 
 def send(request, response):
-    pprint('Sending to user...', response['text'])
-def my_action(request):
-    pprint('Received from user...', request['text'])
-    
+    post_facebook_message(request['session_id'],respose['text'])     
+
+def receiveAction(request):
+    pprint('RECEIVED FROM USER',request['text'])
+
+
+
+actions = {'send':send,
+           'receiveAction':receiveAction
+           }      
+
+client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
+
+
+
 
 def witConnect(incoming_message):  
-    actions = { }  
-    client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
-
     try:
-        #client.__run_actions('session id', incoming_message)
         resp = client.message(incoming_message)
-        #resp= client.converse('session id', incoming_message)
-       
         pprint('Yay, got Wit.ai response: ' + str(resp))
         return resp
     except:
@@ -43,17 +48,15 @@ def witConnect(incoming_message):
 
 
 class SkyBotView(generic.View):
-   # def get(self, request, *args, **kwargs):
-    #    if self.request.GET['hub.verify_token'] == '93985762':
-     #       return HttpResponse(self.request.GET['hub.challenge'])
-      #  else:
-       #     return HttpResponse('Error, invalid token')
+    def get(self, request, *args, **kwargs):
+        if self.request.GET['hub.verify_token'] == '93985762':
+           return HttpResponse(self.request.GET['hub.challenge'])
+        else:
+            return HttpResponse('Error, invalid token')
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return generic.View.dispatch(self, request, *args, **kwargs)
-
-
 
     # Post function to handle Facebook messages
     def post(self, request, *args, **kwargs):
@@ -71,19 +74,20 @@ class SkyBotView(generic.View):
                
                     if message['sender']['id'] != '1884352301811482':
                         pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
-
                         resp=witConnect(message['message']['text'])
                         strResp = parseWitData(resp)
-                        post_facebook_message(message['sender']['id'],str(strResp))     
+                        if scannerInput["datetime1"]  == "jamiryo" and scannerInput["destination"] == "jamiryo" and scannerInput["source"] == "jamiryo" and scannerInput["datetime2"] == "jamiryo":
+                            client.run_actions(message['sender']['id'], message['message']['text'])
+                        else:
+                            post_facebook_message(message['sender']['id'],str(strResp))     
         return HttpResponse()
 
-
+flag=False
 #missingInfo = json.loads('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')
 #flag = False
 scannerInput = json.loads('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')  
     
 def parseWitData(witOut):
-    global scannerInput
     lenofloc=0
     if 'location' in witOut['entities']:
         lenofloc = len(witOut['entities']['location'])
@@ -111,6 +115,7 @@ def parseWitData(witOut):
         scannerInput["destination"] = "jamiryo"
         scannerInput["datetime1"] = "jamiryo"
         scannerInput["datetime2"] = "jamiryo"
+    
     return result
     
 
