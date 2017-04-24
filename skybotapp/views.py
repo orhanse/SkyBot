@@ -19,7 +19,7 @@ def post_facebook_message(fbid, recevied_message):
 
 
 def send(request, response):
-    post_facebook_message(request['session_id'],respose['text'])     
+    post_facebook_message(request['session_id'],response['text'])     
 
 def receiveAction(request):
     pprint('RECEIVED FROM USER',request['text'])
