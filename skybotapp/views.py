@@ -45,7 +45,7 @@ def witConnect(incoming_message):
         if 'reset' in resp['entities']:
             for i in range(0,4):
                 array[i] = 'j'
-         
+            pprint("ARRAY RESET")    
         return resp
     except:
         pprint('WIT.AI ERROR')
@@ -100,6 +100,7 @@ array = ['j','j','j','j']
 
     
 def parseWitData(witOut):
+        pprint('FONKSYONUN BASI: ' + str(array))
         lent = 0
         if 'location' in witOut['entities']:
             lent = len(witOut['entities']['location'])
@@ -139,7 +140,7 @@ def parseWitData(witOut):
                  
 def checkArray(array):
     flag = 1
-    for i in range(0,3):
+    for i in range(0,4):
         if array[i] != 'j':
             flag = 0
     return flag
