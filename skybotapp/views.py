@@ -91,7 +91,7 @@ class SkyBotView(generic.View):
                                 post_facebook_message(message['sender']['id'],str(strResp))     
                                 for i in range(0,3):
                                       array[i] = 'j'
-                                return HttpResponse()      
+                            return HttpResponse()      
                         except:
                                             
                             return HttpResponse()
