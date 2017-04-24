@@ -146,7 +146,7 @@ def parseWitData(witOut,senderID):
             botDB.objects.get(userId = senderID).delete()
         except botDB.DoesNotExist:
             pprint('no record')
-        newMessage = botDB(firstLocation=array[0],secondLocation=array[1],firstDate=array[2],secondDate=array[3])
+        newMessage = botDB(userId = senderID,firstLocation=array[0],secondLocation=array[1],firstDate=array[2],secondDate=array[3])
         newMessage.save()
         if array[0] == 'j' :
             pprint(str(array))
