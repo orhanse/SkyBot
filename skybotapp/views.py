@@ -111,8 +111,8 @@ def parseWitData(witOut):
         if 'datetime' in witOut['entities']: 
             lent = len(witOut['entities']['datetime'])
             if lent == 2:
-                array[2] = str(witOut['entities']['datetime'][0]['value'])
-                array[3] = str(witOut['entities']['datetime'][1]['value'])
+                array[2] = str(witOut['entities']['datetime']['values'][0]['to']['value'])
+                array[3] = str(witOut['entities']['datetime']['values'][0]['from']['value'])
             elif lent ==1:
                 array[2] = str(witOut['entities']['datetime'][0]['value'])
         if array[0] == 'j' :
