@@ -30,7 +30,7 @@ def witConnect(incoming_message):
 
     try:
         #client.__run_actions('session id', incoming_message)
-        resp = client.message()
+        resp = client.message(incoming_message)
         #resp= client.converse('session id', incoming_message)
        
         pprint('Yay, got Wit.ai response: ' + str(resp))
@@ -68,7 +68,7 @@ class SkyBotView(generic.View):
                 if 'message' in message:
                     # Print the message to the terminal
 
-                    pprint(message)
+                    pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + message)
                     resp=witConnect(message['message']['text'])
                     strResp = parseWitData(resp)
                      
