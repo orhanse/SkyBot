@@ -43,7 +43,7 @@ def witConnect(incoming_message):
         resp = client.message(incoming_message)
         pprint('Yay, got Wit.ai response: ' + str(resp))
         if 'reset' in resp['entities']:
-            for i in range(0,3):
+            for i in range(0,4):
                 array[i] = 'j'
          
         return resp
