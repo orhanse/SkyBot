@@ -70,7 +70,6 @@ class SkyBotView(generic.View):
 
     # Post function to handle Facebook messages
     def post(self, request, *args, **kwargs):
-        global array
         # Converts the text payload into a python dictionary
         incoming_message = json.loads(self.request.body.decode('utf-8'))
         # Facebook recommends going through every entry since they might send
@@ -143,7 +142,6 @@ def parseWitData(witOut):
                     
                  
 def checkArray(array):
-    global array
     flag = 1
     for i in range(0,4):
         if array[i] != 'j':
