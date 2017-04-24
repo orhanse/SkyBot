@@ -45,8 +45,12 @@ def witConnect(incoming_message,userID):
         resp = client.message(incoming_message)
         pprint('Yay, got Wit.ai response: ' + str(resp))
         if 'reset' in resp['entities']:
-            if botDB.objects.get(userId = userID) != None:
-                botDB.objects.get(userId = userID).delete()
+            try:
+                 lastMessage = botDB.objects.get(userId = userID)
+                 botDB.objects.get(userId = userID).delete()
+            except botDB.DoesNotExist:
+                 lastMessage = None
+       
         return resp
     except:
         pprint('WIT.AI ERROR')
@@ -101,8 +105,8 @@ class SkyBotView(generic.View):
     
 def parseWitData(witOut,senderID):
         array = ['j','j','j','j']
-        if botDB.objects.get(userId = senderID) != None:
-            lastMessage = botDB.objects.get(userId = userID)
+        try:
+            lastMessage = botDB.objects.get(userId = senderID)
             if lastMessage.firstLocation != None:
                 array[0] = lastMessage.firstLocation
             if lastMessage.secondLocation != None:
@@ -111,6 +115,9 @@ def parseWitData(witOut,senderID):
                 array[2] = lastMessage.firstDate
             if lastMessage.secondDate != None:
                 array[3] = lastMessage.secondDate
+        except botDB.DoesNotExist:
+            lastMessage = None
+            
         pprint('FONKSYONUN BASI: ' + str(array))
         lent = 0
         if 'location' in witOut['entities']:
