@@ -104,7 +104,7 @@ class SkyBotView(generic.View):
 
     
 def parseWitData(witOut,senderID):
-        array = ['j','j','j','j']
+        array = ['j','j',' ',' ']
         try:
             lastMessage = botDB.objects.get(userId = senderID)
             if lastMessage.firstLocation != None:
@@ -154,7 +154,7 @@ def parseWitData(witOut,senderID):
         if array[1] =='j':
             pprint(str(array))
             return 'Please enter the destination'
-        if array[2] == 'j':
+        if array[2] == ' ':
             pprint(str(array))
             return 'Please enter the time you want to fly'
         pprint(str(array))
