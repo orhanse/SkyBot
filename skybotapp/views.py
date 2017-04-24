@@ -92,9 +92,9 @@ def parseWitData(witOut):
                 scannerInput["source"]=str(witOut['entities']['location'][0]['value'])
             elif scannerInput["destination"] == "jamiryo" :
                 scannerInput["destination"]=str(witOut['entities']['location'][0]['value'])
-            
-        if scannerInput["source"] != "jamiryo" and scannerInput["destination"] == "jamiryo" and lenofloc == 2:
-            scannerInput["destination"]=str(witOut['entities']['location'][1]['value'])
+        else:    
+            if scannerInput["source"] != "jamiryo" and scannerInput["destination"] == "jamiryo" and lenofloc == 2:
+                scannerInput["destination"]=str(witOut['entities']['location'][1]['value'])
     if 'datetime' in witOut['entities']:
        scannerInput["datetime1"]=str(witOut['entities']['datetime'][0]['value'])   
 
