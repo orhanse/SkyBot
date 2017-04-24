@@ -30,7 +30,7 @@ def witConnect(incoming_message):
 
     try:
         #client.__run_actions('session id', incoming_message)
-        resp = client.message(incoming_message)
+        resp = client.message()
         #resp= client.converse('session id', incoming_message)
        
         pprint('Yay, got Wit.ai response: ' + str(resp))
