@@ -91,23 +91,23 @@ array = ['j','j','j','j']
 
     
 def parseWitData(witOut):
-        len = 0
+        lent = 0
         if 'location' in witOut['entities']:
-            len = len(witOut['entities']['location'])
+            lent = len(witOut['entities']['location'])
             if array[0] == 'j':
-                if len == 2:
+                if lent == 2:
                    array[0] = str(witOut['entities']['location'][0]['value'])
                    array[1] = str(witOut['entities']['location'][1]['value'])
-                elif len ==1:
+                elif lent ==1:
                    array[0] = str(witOut['entities']['location'][0]['value'])
             else:
                 array[1] = str(witOut['entities']['location'][0]['value'])
         if 'datetime' in witOut['entities']: 
-            len = len(witOut['entities']['datetime'])
-            if len == 2:
+            lent = len(witOut['entities']['datetime'])
+            if lent == 2:
                 array[2] = str(witOut['entities']['datetime'][0]['value'])
                 array[3] = str(witOut['entities']['datetime'][1]['value'])
-            elif len ==1:
+            elif lent ==1:
                 array[2] = str(witOut['entities']['datetime'][0]['value'])
         if array[0] == 'j' :
             return 'Please enter the destination and source'
