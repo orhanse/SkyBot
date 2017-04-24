@@ -89,8 +89,8 @@ class SkyBotView(generic.View):
                                 client.run_actions(message['sender']['id'], message['message']['text'])
                             else:
                                 post_facebook_message(message['sender']['id'],str(strResp))     
-                                for i in range(0,3):
-                                      array[i] = 'j'
+                               # for i in range(0,3):
+                                #      array[i] = 'j'
                                 
                                  
         return HttpResponse()
