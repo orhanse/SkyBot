@@ -124,10 +124,13 @@ def parseWitData(witOut):
             else:
                 array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])
         if array[0] == 'j' :
+            pprint(str(array))
             return 'Please enter the destination and source'
         if array[1] =='j':
+            pprint(str(array))
             return 'Please enter the destination'
         if array[2] == 'j':
+            pprint(str(array))
             return 'Please enter the time you want to fly'
         pprint(str(array))
         return array
