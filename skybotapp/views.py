@@ -11,7 +11,6 @@ from django.http.response import HttpResponse
 from django.template.context_processors import request
 import copy
 # Create your views here.
-array = ['j','j','j','j']
 
 
 def post_facebook_message(fbid, recevied_message):           
@@ -41,15 +40,13 @@ client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
 
 
 
-def witConnect(incoming_message):  
+def witConnect(incoming_message,userID):  
     try:
-        global array
         resp = client.message(incoming_message)
         pprint('Yay, got Wit.ai response: ' + str(resp))
         if 'reset' in resp['entities']:
-            for i in range(0,4):
-                array[i] = 'j'
-            pprint("ARRAY RESET")    
+            if botDB.objects.get(userId = userID) != None:
+                botDB.objects.get(userId = userID).delete()
         return resp
     except:
         pprint('WIT.AI ERROR')
@@ -86,7 +83,7 @@ class SkyBotView(generic.View):
                     if message['sender']['id'] != '1884352301811482':
                 
                             pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
-                            resp=witConnect(message['message']['text'])
+                            resp=witConnect(message['message']['text'],message['sender']['id'])
                             strResp = parseWitData(resp,message['sender']['id'])
                             check = checkArray(array)
                             if check == 1 or 'greeting' in resp['entities'] or 'bye' in resp['entities'] or 'reset' in resp['entities']:
@@ -103,8 +100,17 @@ class SkyBotView(generic.View):
 
     
 def parseWitData(witOut,senderID):
-        global array
-        newDbEntry = botDB(userId = str(senderID),firstLocation = witOut['entities']['location'][0]['value'])
+        array = ['j','j','j','j']
+        if botDB.objects.get(userId = userID) != None:
+            lastMessage = botDB.objects.get(userId = userID)
+            if lastMessage.firstLocation != None:
+                array[0] = lastMessage.firstLocation
+            if lastMessage.secondLocation != None:
+                array[1] = lastMessage.secondLocation
+            if lastMessage.firstDate != None:
+                array[2] = lastMessage.firstDate
+            if lastMessage.secondDate != None:
+                array[3] = lastMessage.secondDate
         pprint('FONKSYONUN BASI: ' + str(array))
         lent = 0
         if 'location' in witOut['entities']:
@@ -129,6 +135,9 @@ def parseWitData(witOut,senderID):
             #elif lent ==1:
             else:
                 array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])
+        botDB.objects.get(userId = userID).delete()
+        newMessage = botDB(firstLocation=array[0],secondLocation=array[1],firstDate=array[2],secondDate=array[3])
+        newMessage.save()
         if array[0] == 'j' :
             pprint(str(array))
             return 'Please enter the destination and source'
@@ -139,6 +148,7 @@ def parseWitData(witOut,senderID):
             pprint(str(array))
             return 'Please enter the time you want to fly'
         pprint(str(array))
+        botDB.objects.get(userId = userID).delete()
         return array
     
                     
