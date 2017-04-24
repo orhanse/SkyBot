@@ -85,7 +85,7 @@ class SkyBotView(generic.View):
 flag=False
 #missingInfo = json.loads('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')
 #flag = False
-scannerInput = json.loads('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')  
+scannerInput = json.dumps('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')  
     
 def parseWitData(witOut):
     lenofloc=0
