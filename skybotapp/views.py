@@ -104,7 +104,7 @@ def parseWitData(witOut):
     if  scannerInput["datetime1"]  == "jamiryo":
         return 'Please enter the datetime'
     result = json.dumps({"source": scannerInput["source"], "destination":scannerInput["destination"],"datetime1":scannerInput["datetime1"],"datetime2":scannerInput["datetime2"]})
-    if scannerInput["datetime1"]  != "jamiryo" and scannerInput["destination"] == "jamiryo" and scannerInput["source"] != "jamiryo":
+    if scannerInput["datetime1"]  != "jamiryo" and scannerInput["destination"] != "jamiryo" and scannerInput["source"] != "jamiryo":
         scannerInput["source"] = "jamiryo"
         scannerInput["destination"] = "jamiryo"
         scannerInput["datetime1"] = "jamiryo"
