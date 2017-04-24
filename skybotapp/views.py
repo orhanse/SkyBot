@@ -19,7 +19,7 @@ def post_facebook_message(fbid, recevied_message):
 
 
 def send(request, response):
-    post_facebook_message(request['session_id'],response['text'])     
+    post_facebook_message(request['session_id'],str(response['text']))     
 
 def receiveAction(request):
     pprint('RECEIVED FROM USER',request['text'])
@@ -72,12 +72,12 @@ class SkyBotView(generic.View):
                     # Print the message to the terminal
 
                
-                    #if message['sender']['id'] != '1884352301811482':
-                    pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
+                    if message['sender']['id'] != '1884352301811482':
+                        pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
                         #resp=witConnect(message['message']['text'])
                         #strResp = parseWitData(resp)
                         #if scannerInput["datetime1"]  == "jamiryo" and scannerInput["destination"] == "jamiryo" and scannerInput["source"] == "jamiryo" and scannerInput["datetime2"] == "jamiryo":
-                    client.run_actions(message['sender']['id'], message['message']['text'])
+                        client.run_actions(message['sender']['id'], message['message']['text'])
                         #else:
                         #post_facebook_message(message['sender']['id'],str(strResp))     
         return HttpResponse()
