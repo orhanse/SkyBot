@@ -113,8 +113,8 @@ def parseWitData(witOut):
             if lent == 2:
                 array[2] = str(witOut['entities']['datetime']['values'][0]['to']['value'])
                 array[3] = str(witOut['entities']['datetime']['values'][0]['from']['value'])
-            elif lent ==1:
-                array[2] = str(witOut['entities']['datetime']['values']['value'])
+        #    elif lent ==1:
+         #       array[2] = str(witOut['entities']['datetime']['values']['value'])
         if array[0] == 'j' :
             return 'Please enter the destination and source'
         if array[1] =='j':
