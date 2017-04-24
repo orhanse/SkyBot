@@ -115,8 +115,11 @@ def parseWitData(witOut):
             #if 'to' in  witOut['entities']['datetime']['values'][0]:
             lent = len(witOut['entities']['datetime'][0]['values'])
             if lent > 1:
-                array[2] = str(witOut['entities']['datetime'][0]['values'][0]['to']['value'])
-                array[3] = str(witOut['entities']['datetime'][0]['values'][0]['from']['value'])
+                if 'to' in  witOut['entities']['datetime'][0]['values'][0]:
+                    array[2] = str(witOut['entities']['datetime'][0]['values'][0]['to']['value'])
+                    array[3] = str(witOut['entities']['datetime'][0]['values'][0]['from']['value'])
+                else:
+                    array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])   
             #elif lent ==1:
             else:
                 array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])
