@@ -91,8 +91,7 @@ array = ['j','j','j','j']
 
     
 def parseWitData(witOut):
-    len = 0
-    if message['sender']['id'] != '1884352301811482':
+        len = 0
         if 'location' in witOut['entities']:
             len = len(witOut['entities']['location'])
             if array[0] == 'j':
@@ -110,14 +109,14 @@ def parseWitData(witOut):
                 array[3] = str(witOut['entities']['datetime'][1]['value'])
             elif len ==1:
                 array[2] = str(witOut['entities']['datetime'][0]['value'])
-    if array[0] == 'j' :
-        return 'Please enter the destination and source'
-    if array[1] =='j':
-        return 'Please enter the destination'
-    if array[2] == 'j':
-        return 'Please enter the time you want to fly'
+        if array[0] == 'j' :
+            return 'Please enter the destination and source'
+        if array[1] =='j':
+            return 'Please enter the destination'
+        if array[2] == 'j':
+            return 'Please enter the time you want to fly'
     
-    return array
+        return array
     
                     
                  
