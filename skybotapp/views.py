@@ -68,7 +68,7 @@ class SkyBotView(generic.View):
                 if 'message' in message:
                     # Print the message to the terminal
 
-                    pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
+               
                     if message['sender']['id'] != '1884352301811482':
                         pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
 
