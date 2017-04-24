@@ -70,6 +70,8 @@ class SkyBotView(generic.View):
 
                     pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
                     if message['sender']['id'] != '1884352301811482':
+                        pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
+
                         resp=witConnect(message['message']['text'])
                         strResp = parseWitData(resp)
                         post_facebook_message(message['sender']['id'],str(strResp))     
@@ -97,13 +99,10 @@ def parseWitData(witOut):
        scannerInput["datetime1"]=str(witOut['entities']['datetime'][0]['value'])   
 
     if  scannerInput["source"] == "jamiryo":
-
         return 'I couldnt find any location info in your message. Please enter your flight "from x to y'
     if  scannerInput["destination"] == "jamiryo":
-
         return 'Please enter the destination'
     if  scannerInput["datetime1"]  == "jamiryo":
-
         return 'Please enter the datetime'
     result = json.dumps({"source": scannerInput["source"], "destination":scannerInput["destination"],"datetime1":scannerInput["datetime1"],"datetime2":scannerInput["datetime2"]})
     if scannerInput["datetime1"]  != "jamiryo" and scannerInput["destination"] == "jamiryo" and scannerInput["source"] != "jamiryo":
