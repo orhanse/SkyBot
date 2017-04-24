@@ -42,6 +42,10 @@ def witConnect(incoming_message):
     try:
         resp = client.message(incoming_message)
         pprint('Yay, got Wit.ai response: ' + str(resp))
+        if 'reset' in resp['entities']:
+            for i in range(0,3):
+                array[i] = 'j'
+         
         return resp
     except:
         pprint('WIT.AI ERROR')
@@ -84,6 +88,8 @@ class SkyBotView(generic.View):
                             client.run_actions(message['sender']['id'], message['message']['text'])
                         else:
                             post_facebook_message(message['sender']['id'],str(strResp))     
+                            for i in range(0,3):
+                                array[i] = 'j'
         return HttpResponse()
 
 array = ['j','j','j','j']
@@ -126,6 +132,7 @@ def checkArray(array):
         if array[i] != 'j':
             flag = 0
     return flag
+
     
     
    
