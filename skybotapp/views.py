@@ -75,46 +75,17 @@ class SkyBotView(generic.View):
                     if message['sender']['id'] != '1884352301811482':
                         pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
                         resp=witConnect(message['message']['text'])
-                        strResp = parseWitData(resp)
-                        if scannerInput["datetime1"]  == "jamiryo" and scannerInput["destination"] == "jamiryo" and scannerInput["source"] == "jamiryo" and scannerInput["datetime2"] == "jamiryo":
-                            client.run_actions(message['sender']['id'], message['message']['text'])
-                        else:
-                            post_facebook_message(message['sender']['id'],str(strResp))     
+                        #strResp = parseWitData(resp)
+                        #if scannerInput["datetime1"]  == "jamiryo" and scannerInput["destination"] == "jamiryo" and scannerInput["source"] == "jamiryo" and scannerInput["datetime2"] == "jamiryo":
+                        client.run_actions(message['sender']['id'], message['message']['text'])
+                        #else:
+                        #post_facebook_message(message['sender']['id'],str(strResp))     
         return HttpResponse()
 
-flag=False
-#missingInfo = json.loads('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')
-#flag = False
-scannerInput = json.dumps('{"source": "jamiryo", "destination": "jamiryo","datetime1":"jamiryo","datetime2":"jamiryo"}')  
+
     
 def parseWitData(witOut):
-    lenofloc=0
-    if 'location' in witOut['entities']:
-        lenofloc = len(witOut['entities']['location'])
-        if lenofloc == 1:
-            if scannerInput["source"] == "jamiryo":
-                scannerInput["source"]=str(witOut['entities']['location'][0]['value'])
-            elif scannerInput["destination"] == "jamiryo" :
-                scannerInput["destination"]=str(witOut['entities']['location'][0]['value'])
-        else:    
-          #  if scannerInput["source"] != "jamiryo" and scannerInput["destination"] == "jamiryo" and lenofloc == 2:
-            scannerInput["source"]=str(witOut['entities']['location'][0]['value'])
-            scannerInput["destination"]=str(witOut['entities']['location'][1]['value'])
-    if 'datetime' in witOut['entities']:
-       scannerInput["datetime1"]=str(witOut['entities']['datetime'][0]['value'])   
 
-    if  scannerInput["source"] == "jamiryo":
-        return 'I couldnt find any location info in your message. Please enter your flight "from x to y'
-    if  scannerInput["destination"] == "jamiryo":
-        return 'Please enter the destination'
-    if  scannerInput["datetime1"]  == "jamiryo":
-        return 'Please enter the datetime'
-    result = json.dumps({"source": scannerInput["source"], "destination":scannerInput["destination"],"datetime1":scannerInput["datetime1"],"datetime2":scannerInput["datetime2"]})
-    if scannerInput["datetime1"]  != "jamiryo" and scannerInput["destination"] != "jamiryo" and scannerInput["source"] != "jamiryo":
-        scannerInput["source"] = "jamiryo"
-        scannerInput["destination"] = "jamiryo"
-        scannerInput["datetime1"] = "jamiryo"
-        scannerInput["datetime2"] = "jamiryo"
     
     return result
     
