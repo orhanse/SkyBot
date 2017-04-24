@@ -11,7 +11,7 @@ from django.http.response import HttpResponse
 from django.template.context_processors import request
 import copy
 # Create your views here.
-array = []
+array = ['j','j','j','j']
 
 
 def post_facebook_message(fbid, recevied_message):           
