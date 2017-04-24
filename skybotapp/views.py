@@ -88,7 +88,7 @@ class SkyBotView(generic.View):
                             resp=witConnect(message['message']['text'])
                             strResp = parseWitData(resp)
                             check = checkArray(array)
-                            if check == 1 or 'greeting' in resp['entities'] or 'bye' in resp['entities']:
+                            if check == 1 or 'greeting' in resp['entities'] or 'bye' in resp['entities'] or 'reset' in resp['entities']:
                                 client.run_actions(message['sender']['id'], message['message']['text'])
                             else:
                                 post_facebook_message(message['sender']['id'],str(strResp))     
