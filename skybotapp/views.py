@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from wit import Wit
+from .models import botDB
 from django.views import generic
 from django.http.response import HttpResponse
 from django.template.context_processors import request
@@ -86,7 +87,7 @@ class SkyBotView(generic.View):
                 
                             pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
                             resp=witConnect(message['message']['text'])
-                            strResp = parseWitData(resp)
+                            strResp = parseWitData(resp,message['sender']['id'])
                             check = checkArray(array)
                             if check == 1 or 'greeting' in resp['entities'] or 'bye' in resp['entities'] or 'reset' in resp['entities']:
                                 client.run_actions(message['sender']['id'], message['message']['text'])
@@ -101,8 +102,9 @@ class SkyBotView(generic.View):
 
 
     
-def parseWitData(witOut):
+def parseWitData(witOut,senderID):
         global array
+        newDbEntry = botDB(userId = str(senderID),firstLocation = witOut['entities']['location'][0]['value'])
         pprint('FONKSYONUN BASI: ' + str(array))
         lent = 0
         if 'location' in witOut['entities']:
