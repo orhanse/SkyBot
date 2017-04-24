@@ -80,7 +80,7 @@ class SkyBotView(generic.View):
 
                
                     if message['sender']['id'] != '1884352301811482':
-                        try:
+                
                             pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
                             resp=witConnect(message['message']['text'])
                             strResp = parseWitData(resp)
@@ -92,8 +92,7 @@ class SkyBotView(generic.View):
                                 for i in range(0,3):
                                       array[i] = 'j'
                                 
-                        except:
-                            pprint('hata hello')             
+                                 
         return HttpResponse()
 
 array = ['j','j','j','j']
