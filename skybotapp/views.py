@@ -91,10 +91,10 @@ class SkyBotView(generic.View):
                                 post_facebook_message(message['sender']['id'],str(strResp))     
                                 for i in range(0,3):
                                       array[i] = 'j'
-                            return HttpResponse()      
+                                
                         except:
-                                            
-                            return HttpResponse()
+                            pprint('hata hello')             
+        return HttpResponse()
 
 array = ['j','j','j','j']
 
