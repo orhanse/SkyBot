@@ -68,7 +68,7 @@ class SkyBotView(generic.View):
                 if 'message' in message:
                     # Print the message to the terminal
 
-                    pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + message)
+                    pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
                     resp=witConnect(message['message']['text'])
                     strResp = parseWitData(resp)
                      
