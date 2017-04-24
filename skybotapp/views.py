@@ -11,6 +11,8 @@ from django.template.context_processors import request
 import copy
 # Create your views here.
 
+array = ['j','j','j','j']
+
 def post_facebook_message(fbid, recevied_message):           
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=EAASfh0TDd8cBAHBMfkWQGAexatTOup01lZCXtUJ5CF5Imr5b7MeQu30v6TnEzQmvoJF9MZBzkoZBdhLaVcCSY2BtPivUNJh7pic5vfEA13qDr3TRQLuHn8aKpKZAip4X2QHqhBTa7XQNGPnII1cqNMP46gAaRYMzHHSnZA4NZCAwZDZD' 
     response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":recevied_message}})
@@ -95,7 +97,6 @@ class SkyBotView(generic.View):
                                  
         return HttpResponse()
 
-array = ['j','j','j','j']
 
 
     
