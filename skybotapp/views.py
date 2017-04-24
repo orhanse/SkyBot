@@ -109,7 +109,7 @@ def parseWitData(witOut):
                    array[1] = str(witOut['entities']['location'][1]['value'])
                 elif lent ==1:
                    array[0] = str(witOut['entities']['location'][0]['value'])
-            else:
+            elif array[1] == 'j':
                 array[1] = str(witOut['entities']['location'][0]['value'])
         if 'datetime' in witOut['entities']:
             #if 'to' in  witOut['entities']['datetime']['values'][0]:
@@ -119,7 +119,8 @@ def parseWitData(witOut):
                     array[2] = str(witOut['entities']['datetime'][0]['values'][0]['to']['value'])
                     array[3] = str(witOut['entities']['datetime'][0]['values'][0]['from']['value'])
                 else:
-                    array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])   
+                    array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])  
+                    return 'Please enter return date again' 
             #elif lent ==1:
             else:
                 array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])
@@ -160,8 +161,6 @@ def homeView(request):
 #    'send': send,
 #    'my_action': my_action,
 #}
-
-
 
 
 
