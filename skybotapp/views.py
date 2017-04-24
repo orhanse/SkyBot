@@ -25,10 +25,7 @@ def my_action(request):
     
 
 def witConnect(incoming_message):  
-    actions = {
-        'send': send,
-        'my_action': my_action,
-    }  
+    actions = { }  
     client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
 
     try:
