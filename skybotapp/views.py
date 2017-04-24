@@ -42,6 +42,7 @@ client = Wit(access_token='KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC', actions=actions)
 
 def witConnect(incoming_message):  
     try:
+        global array
         resp = client.message(incoming_message)
         pprint('Yay, got Wit.ai response: ' + str(resp))
         if 'reset' in resp['entities']:
@@ -69,6 +70,7 @@ class SkyBotView(generic.View):
 
     # Post function to handle Facebook messages
     def post(self, request, *args, **kwargs):
+        global array
         # Converts the text payload into a python dictionary
         incoming_message = json.loads(self.request.body.decode('utf-8'))
         # Facebook recommends going through every entry since they might send
@@ -102,6 +104,7 @@ class SkyBotView(generic.View):
     
 def parseWitData(witOut):
         pprint('FONKSYONUN BASI: ' + str(array))
+        global array
         lent = 0
         if 'location' in witOut['entities']:
             lent = len(witOut['entities']['location'])
@@ -140,6 +143,7 @@ def parseWitData(witOut):
                     
                  
 def checkArray(array):
+    global array
     flag = 1
     for i in range(0,4):
         if array[i] != 'j':
