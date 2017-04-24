@@ -83,7 +83,7 @@ class SkyBotView(generic.View):
                         if check == 1:
                             client.run_actions(message['sender']['id'], message['message']['text'])
                         else:
-                            post_facebook_message(message['sender']['id'],strResp)     
+                            post_facebook_message(message['sender']['id'],str(strResp))     
         return HttpResponse()
 
 array = ['j','j','j','j']
