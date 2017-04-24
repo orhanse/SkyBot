@@ -19,7 +19,10 @@ def post_facebook_message(fbid, recevied_message):
 
 
 def send(request, response):
-    post_facebook_message(request['session_id'],str(response['text']))     
+    text = str(response['text'])
+    text = text[:-1]
+    text = text[2:]
+    post_facebook_message(request['session_id'],text)     
 
 def receiveAction(request):
     pprint('RECEIVED FROM USER',request['text'])
@@ -74,20 +77,59 @@ class SkyBotView(generic.View):
                
                     if message['sender']['id'] != '1884352301811482':
                         pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
-                        #resp=witConnect(message['message']['text'])
-                        #strResp = parseWitData(resp)
-                        #if scannerInput["datetime1"]  == "jamiryo" and scannerInput["destination"] == "jamiryo" and scannerInput["source"] == "jamiryo" and scannerInput["datetime2"] == "jamiryo":
-                        client.run_actions(message['sender']['id'], message['message']['text'])
-                        #else:
-                        #post_facebook_message(message['sender']['id'],str(strResp))     
+                        resp=witConnect(message['message']['text'])
+                        strResp = parseWitData(resp)
+                        check = checkArray(array)
+                        if check == 1:
+                            client.run_actions(message['sender']['id'], message['message']['text'])
+                        else:
+                            post_facebook_message(message['sender']['id'],strResp)     
         return HttpResponse()
+
+array = ['j','j','j','j']
 
 
     
 def parseWitData(witOut):
-
+    len = 0
+    if message['sender']['id'] != '1884352301811482':
+        if 'location' in witOut['entities']:
+            len = len(witOut['entities']['location'])
+            if array[0] == 'j':
+                if len == 2:
+                   array[0] = str(witOut['entities']['location'][0]['value'])
+                   array[1] = str(witOut['entities']['location'][1]['value'])
+                elif len ==1:
+                   array[0] = str(witOut['entities']['location'][0]['value'])
+            else:
+                array[1] = str(witOut['entities']['location'][0]['value'])
+        if 'datetime' in witOut['entities']: 
+            len = len(witOut['entities']['datetime'])
+            if len == 2:
+                array[2] = str(witOut['entities']['datetime'][0]['value'])
+                array[3] = str(witOut['entities']['datetime'][1]['value'])
+            elif len ==1:
+                array[2] = str(witOut['entities']['datetime'][0]['value'])
+    if array[0] == 'j' :
+        return 'Please enter the destination and source'
+    if array[1] =='j':
+        return 'Please enter the destination'
+    if array[2] == 'j':
+        return 'Please enter the time you want to fly'
     
-    return result
+    return array
+    
+                    
+                 
+def checkArray(array):
+    flag = 1
+    for i in range(0,3):
+        if array[i] != 'j':
+            flag = 0
+    return flag
+    
+    
+   
     
 
 
