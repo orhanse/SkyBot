@@ -113,13 +113,13 @@ def parseWitData(witOut):
                 array[1] = str(witOut['entities']['location'][0]['value'])
         if 'datetime' in witOut['entities']:
             #if 'to' in  witOut['entities']['datetime']['values'][0]:
-            lent = len(witOut['entities']['datetime']['values'])
+            lent = len(witOut['entities']['datetime'][0]['values'])
             if lent > 1:
-                array[2] = str(witOut['entities']['datetime']['values'][0]['to']['value'])
-                array[3] = str(witOut['entities']['datetime']['values'][0]['from']['value'])
+                array[2] = str(witOut['entities']['datetime'][0]['values'][0]['to']['value'])
+                array[3] = str(witOut['entities']['datetime'][0]['values'][0]['from']['value'])
             #elif lent ==1:
             else:
-                array[2] = str(witOut['entities']['datetime']['values'][0]['value'])
+                array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])
         if array[0] == 'j' :
             return 'Please enter the destination and source'
         if array[1] =='j':
@@ -157,8 +157,6 @@ def homeView(request):
 #    'send': send,
 #    'my_action': my_action,
 #}
-
-
 
 
 
