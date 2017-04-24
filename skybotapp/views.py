@@ -80,17 +80,21 @@ class SkyBotView(generic.View):
 
                
                     if message['sender']['id'] != '1884352301811482':
-                        pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
-                        resp=witConnect(message['message']['text'])
-                        strResp = parseWitData(resp)
-                        check = checkArray(array)
-                        if check == 1:
-                            client.run_actions(message['sender']['id'], message['message']['text'])
-                        else:
-                            post_facebook_message(message['sender']['id'],str(strResp))     
-                            for i in range(0,3):
-                                array[i] = 'j'
-        return HttpResponse()
+                        try:
+                            pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
+                            resp=witConnect(message['message']['text'])
+                            strResp = parseWitData(resp)
+                            check = checkArray(array)
+                            if check == 1:
+                                client.run_actions(message['sender']['id'], message['message']['text'])
+                            else:
+                                post_facebook_message(message['sender']['id'],str(strResp))     
+                                for i in range(0,3):
+                                      array[i] = 'j'
+                                return HttpResponse()      
+                        except:
+                                            
+                            return HttpResponse()
 
 array = ['j','j','j','j']
 
