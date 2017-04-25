@@ -89,6 +89,7 @@ class SkyBotView(generic.View):
                             pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
                             resp=witConnect(message['message']['text'],message['sender']['id'])
                             strResp = parseWitData(resp,message['sender']['id'])
+                            array = ['j','j','j','j']
                             try:
                                 lastMessage = botDB.objects.get(userId = message['sender']['id'])
                                 if lastMessage.firstLocation != None:
@@ -100,7 +101,7 @@ class SkyBotView(generic.View):
                                 if lastMessage.secondDate != None:
                                     array[3] = lastMessage.secondDate
                             except botDB.DoesNotExist:
-                                array = ['j','j','j','j']
+                                lastMessage = None
                             check = checkArray(array)
                             if check == 1 or 'greeting' in resp['entities'] or 'bye' in resp['entities'] or 'reset' in resp['entities']:
                                 client.run_actions(message['sender']['id'], message['message']['text'])
