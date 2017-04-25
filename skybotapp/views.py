@@ -108,7 +108,12 @@ class SkyBotView(generic.View):
                             if check == 1 or 'greeting' in resp['entities'] or 'bye' in resp['entities'] or 'reset' in resp['entities']:
                                 client.run_actions(message['sender']['id'], message['message']['text'])
                             else:
-                                post_facebook_message(message['sender']['id'],str(strResp))     
+                                if strResp == 'done':
+                                    botDB.objects.get(userId = senderID).delete()
+                                    post_facebook_message(message['sender']['id'],str(array))
+                                else:
+                                    post_facebook_message(message['sender']['id'],str(strResp))
+                                
                                # for i in range(0,3):
                                 #      array[i] = 'j'
                                 
@@ -173,8 +178,7 @@ def parseWitData(witOut,senderID):
             pprint(str(array))
             return 'Please enter the time you want to fly'
         pprint(str(array))
-        botDB.objects.get(userId = senderID).delete()
-        return array
+        return 'done'
     
                     
                  
