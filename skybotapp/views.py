@@ -90,7 +90,7 @@ class SkyBotView(generic.View):
                             resp=witConnect(message['message']['text'],message['sender']['id'])
                             strResp = parseWitData(resp,message['sender']['id'])
                             try:
-                                lastMessage = botDB.objects.get(userId = senderID)
+                                lastMessage = botDB.objects.get(userId = message['sender']['id'])
                                 if lastMessage.firstLocation != None:
                                     array[0] = lastMessage.firstLocation
                                 if lastMessage.secondLocation != None:
