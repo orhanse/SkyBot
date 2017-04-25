@@ -109,7 +109,7 @@ class SkyBotView(generic.View):
                                 client.run_actions(message['sender']['id'], message['message']['text'])
                             else:
                                 if strResp == 'done':
-                                    botDB.objects.get(userId = senderID).delete()
+                                    botDB.objects.get(userId = message['sender']['id']).delete()
                                     post_facebook_message(message['sender']['id'],str(array))
                                 else:
                                     post_facebook_message(message['sender']['id'],str(strResp))
