@@ -104,7 +104,7 @@ class SkyBotView(generic.View):
                                 lastMessage = None
                             check = checkArray(array)
                             pprint('array: ' + str(array))
-                            pprint('check: ' + check)
+                            pprint('check: ' + str(check))
                             if check == 1 or 'greeting' in resp['entities'] or 'bye' in resp['entities'] or 'reset' in resp['entities']:
                                 client.run_actions(message['sender']['id'], message['message']['text'])
                             else:
