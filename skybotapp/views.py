@@ -89,6 +89,18 @@ class SkyBotView(generic.View):
                             pprint('THE MESSAGE POSTED TO WITCONNECT FUNCTION : ' + str(message))
                             resp=witConnect(message['message']['text'],message['sender']['id'])
                             strResp = parseWitData(resp,message['sender']['id'])
+                            try:
+                                lastMessage = botDB.objects.get(userId = senderID)
+                                if lastMessage.firstLocation != None:
+                                    array[0] = lastMessage.firstLocation
+                                if lastMessage.secondLocation != None:
+                                    array[1] = lastMessage.secondLocation
+                                if lastMessage.firstDate != None:
+                                    array[2] = lastMessage.firstDate
+                                if lastMessage.secondDate != None:
+                                    array[3] = lastMessage.secondDate
+                            except botDB.DoesNotExist:
+                                array = ['j','j','j','j']
                             check = checkArray(array)
                             if check == 1 or 'greeting' in resp['entities'] or 'bye' in resp['entities'] or 'reset' in resp['entities']:
                                 client.run_actions(message['sender']['id'], message['message']['text'])
@@ -104,7 +116,7 @@ class SkyBotView(generic.View):
 
     
 def parseWitData(witOut,senderID):
-        array = ['j','j',' ',' ']
+        array = ['j','j','j','j']
         try:
             lastMessage = botDB.objects.get(userId = senderID)
             if lastMessage.firstLocation != None:
@@ -154,7 +166,7 @@ def parseWitData(witOut,senderID):
         if array[1] =='j':
             pprint(str(array))
             return 'Please enter the destination'
-        if array[2] == ' ':
+        if array[2] == 'j':
             pprint(str(array))
             return 'Please enter the time you want to fly'
         pprint(str(array))
