@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-import request,json, datetime
+import requests,json, datetime
 
 def flight(list):
     
