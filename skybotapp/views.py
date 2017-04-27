@@ -10,7 +10,6 @@ from django.views import generic
 from django.http.response import HttpResponse
 from django.template.context_processors import request
 import copy
-from . import flightAPI
 # Create your views here.
 
 
@@ -101,7 +100,6 @@ class SkyBotView(generic.View):
                                     array[2] = lastMessage.firstDate
                                 if lastMessage.secondDate != None:
                                     array[3] = lastMessage.secondDate
-                                
                             except botDB.DoesNotExist:
                                 lastMessage = None
                             check = checkArray(array)
@@ -180,8 +178,7 @@ def parseWitData(witOut,senderID):
             pprint(str(array))
             return 'Please enter the time you want to fly'
         pprint(str(array))
-        
-        return flightAPI(array)
+        return 'done'
     
                     
                  
@@ -192,7 +189,7 @@ def checkArray(array):
             flag = 0
     return flag
 
-
+    
     
    
     
