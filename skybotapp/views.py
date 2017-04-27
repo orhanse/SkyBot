@@ -10,6 +10,7 @@ from django.views import generic
 from django.http.response import HttpResponse
 from django.template.context_processors import request
 import copy
+from . import flightAPI
 # Create your views here.
 
 
@@ -178,7 +179,8 @@ def parseWitData(witOut,senderID):
             pprint(str(array))
             return 'Please enter the time you want to fly'
         pprint(str(array))
-        return 'done'
+        return flight(array)
+        #return 'done'
     
                     
                  
@@ -188,12 +190,6 @@ def checkArray(array):
         if array[i] != 'j':
             flag = 0
     return flag
-
-    
-    
-   
-    
-
 
 
 #message['message']['text']
