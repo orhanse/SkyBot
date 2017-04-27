@@ -2,23 +2,23 @@ from django.http import HttpResponse
 import requests, json, datetime
 
 def flight(list):
-    
-	if list[4] == None:
+    result = json.loads(json.dumps({'price': 0, 'out': {'date': '', 'from':'', 'to':'', 'carrier':''}, 'in':{'date': '', 'from':'','to':'','carrier':''}})) # direct???
+
+    if list[4] == None:
 		inbounddate=''
 		roundTrip = True
-	else:
+    else:
 		inbounddate=str(list[4])[:10]
 		roundTrip = False
 		
-	if list[3] == None:
+    if list[3] == None:
 		list[3] = str(datetime.date.today())
         
-    result = json.loads(json.dumps({'price': 0, 'out': {'date': '', 'from':'', 'to':'', 'carrier':''}, 'in':{'date': '', 'from':'','to':'','carrier':''}})) # direct???
     origin=id_finder(list[0])
     destination=id_finder(list[1])
     outbounddate=list[3][:10]
 	
-	if origin == None or destination == None:
+    if origin == None or destination == None:
 		return 'Yanlis konum bilgisi'
     
     if len(outbounddate) != len(inbounddate) and len(inbounddate)!=0:   # date kontrolu 
