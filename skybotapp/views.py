@@ -11,7 +11,6 @@ from django.http.response import HttpResponse
 from django.template.context_processors import request
 import copy
 
-# Create your views here.
 
 
 def post_facebook_message(fbid, recevied_message):           
@@ -56,8 +55,7 @@ def witConnect(incoming_message,userID):
     except:
         pprint('WIT.AI ERROR')
     
-#KVCNXSS7SD5RENA5PQ6QBS242ETDIBHC
-#turgut DJE4HFOBMAJO6DMIC2IEZRP5DDRQRZKS    
+ 
 
 
 class SkyBotView(generic.View):
@@ -71,19 +69,12 @@ class SkyBotView(generic.View):
     def dispatch(self, request, *args, **kwargs):
         return generic.View.dispatch(self, request, *args, **kwargs)
 
-    # Post function to handle Facebook messages
-    def post(self, request, *args, **kwargs):
-        # Converts the text payload into a python dictionary
-        incoming_message = json.loads(self.request.body.decode('utf-8'))
-        # Facebook recommends going through every entry since they might send
-        # multiple messages in a single call during high load
-        for entry in incoming_message['entry']:
-            for message in entry['messaging']:
-                # Check to make sure the received call is a message call
-                # This might be delivery, optin, postback for other events 
-                if 'message' in message:
-                    # Print the message to the terminal
 
+    def post(self, request, *args, **kwargs):
+        incoming_message = json.loads(self.request.body.decode('utf-8'))
+        for entry in incoming_message['entry']:
+            for message in entry['messaging']: 
+                if 'message' in message:
                
                     if message['sender']['id'] != '1884352301811482':
                 
@@ -114,10 +105,7 @@ class SkyBotView(generic.View):
                                     post_facebook_message(message['sender']['id'],str(array))
                                 else:
                                     post_facebook_message(message['sender']['id'],str(strResp))
-                                
-                               # for i in range(0,3):
-                                #      array[i] = 'j'
-                                
+
                                  
         return HttpResponse()
 
@@ -152,7 +140,6 @@ def parseWitData(witOut,senderID):
             elif array[1] == 'j':
                 array[1] = str(witOut['entities']['location'][0]['value'])
         if 'datetime' in witOut['entities']:
-            #if 'to' in  witOut['entities']['datetime']['values'][0]:
             lent = len(witOut['entities']['datetime'][0]['values'])
             if lent > 1:
                 if 'to' in  witOut['entities']['datetime'][0]['values'][0]:
@@ -160,7 +147,6 @@ def parseWitData(witOut,senderID):
                     array[3] = str(witOut['entities']['datetime'][0]['values'][0]['from']['value'])
                 else:
                     array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])  
-            #elif lent ==1:
             else:
                 array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])
         try:
@@ -192,18 +178,13 @@ def checkArray(array):
     return flag
 
 
-#message['message']['text']
-#resp['entities']['location'][0]['value']
 
 def homeView(request):
     return HttpResponse('Hello')
 
 
 
-#actions = {
-#    'send': send,
-#    'my_action': my_action,
-#}
+
 
 
 
