@@ -238,7 +238,7 @@ def flight(list):
                     result['in']['carrier'] = data['Carriers'][j]['Name']
                     
     printout = 'The cheapest flight according to informaiton you gave: from' + result['out']['from'] + 'to' + result['out']['to'] + 'on' + result['out']['date'] + 'and return is on' + result['in']['date'] + 'for $ ' + result['price']
-            
+    pprint(str(printout))
     return printout
 
 def id_finder(place):
