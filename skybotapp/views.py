@@ -179,8 +179,8 @@ def parseWitData(witOut,senderID):
             pprint(str(array))
             return 'Please enter the time you want to fly'
         pprint(str(array))
-        return flight(array)
-        #return 'done'
+        #return flight(array)
+        return 'done'
     
                     
                  
