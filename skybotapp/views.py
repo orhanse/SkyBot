@@ -212,7 +212,7 @@ def flight(list):
         return 'Parametrelere uygun sonuc bulunamadi'
         
     for i in range(0, len(data['Quotes'])):
-        if (roundTrip and 'InboundLeg' in data['Quotes'][i]) or (not roundtrip and not 'InboundLeg' in data['Quotes'][i]):
+        if (roundTrip and 'InboundLeg' in data['Quotes'][i]) or (not roundTrip and not 'InboundLeg' in data['Quotes'][i]):
         
             result['price']=data['Quotes'][i]['MinPrice']
             result['out']['date']=str(data['Quotes'][i]['OutboundLeg']['DepartureDate'])[:10]
