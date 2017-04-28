@@ -183,13 +183,13 @@ def homeView(request):
     return HttpResponse('Hello')
 
 def flight(list):
-    
+    pprint('flight basi: ' + str(list))
     if list[3] == 'j': # j yap bunu
         inbounddate = ''
-        roundTrip = True
+        roundTrip = False
     else:
         inbounddate = str(list[3][:10])
-        roundTrip = False
+        roundTrip = True
         
     if list[2] == 'j': # tarih nasil yolluyor
         list[2] = str(datetime.date.today())
@@ -202,7 +202,7 @@ def flight(list):
     if origin == None or destination == None:
         return 'Yanlis konum bilgisi'
     
-    if len(outbounddate) != len(inbounddate) and len(inbounddate)!=0:   # date kontrolu 
+    if len(inbounddate)!=0 and (len(outbounddate) != len(inbounddate)):   # date kontrolu 
         return 'Girilen tarihler uyumsuz'
  
     query=requests.get('http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/tr/try/tr/'+origin+'/'+destination+'/'+outbounddate+'/'+inbounddate+'?apiKey=sk183163813532396485407386558735') 
