@@ -211,7 +211,7 @@ def flight(list):
     pprint('kontrol=  ' + origin + destination + outbounddate + inbounddate)
     query=requests.get('http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/tr/try/tr/'+origin+'/'+destination+'/'+outbounddate+'/'+inbounddate+'?apiKey=sk183163813532396485407386558735') 
     data=query.json()
-    
+    pprint('SONUC = ' + str(data))
     if len(data['Quotes']) == 0:  # Bu parametrelere uyan bir ucus yok.
         return 'Parametrelere uygun sonuc bulunamadi'
         
