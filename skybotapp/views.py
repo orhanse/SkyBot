@@ -185,7 +185,7 @@ def homeView(request):
 def flight(list):
     
     if list[3] == 'j': # j yap bunu
-        inbounnddate == ''
+        inbounddate = ''
         roundTrip = True
     else:
         inbounddate = str(list[3][:10])
