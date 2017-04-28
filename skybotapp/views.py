@@ -10,7 +10,7 @@ from django.views import generic
 from django.http.response import HttpResponse
 from django.template.context_processors import request
 import copy
-from . import flightAPI
+
 # Create your views here.
 
 
