@@ -239,7 +239,7 @@ def flight(list):
         break
     
     pprint('flight result: ' + str(result))
-    printout = 'The cheapest flight according to informaiton you gave: from' + result['out']['from'] + 'to' + result['out']['to'] + 'on' + result['out']['date'] + 'and return is on' + result['in']['date'] + 'for $ ' + str(result['price'])
+    printout = 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' and return is on ' + result['in']['date'] + ' for ' + str(result['price'] + ' tl')
     pprint('flight sonu: ' + str(printout))
     return printout
 
