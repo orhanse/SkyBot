@@ -184,20 +184,24 @@ def homeView(request):
 
 def flight(list):
     pprint('flight basi: ' + str(list))
+    if list[2] == 'j': # tarih nasil yolluyor
+        list[2] = str(datetime.date.today())
+        
     if list[3] == 'j': # j yap bunu
         inbounddate = ''
         roundTrip = False
+        outbounddate = list[2][:10]
     else:
-        inbounddate = str(list[3][:10])
+        inbounddate = str(list[2][:10])
         roundTrip = True
+        outbounddate = str(list[3][:10])
         
-    if list[2] == 'j': # tarih nasil yolluyor
-        list[2] = str(datetime.date.today())
+    
         
     result = json.loads(json.dumps({'price': 0, 'out': {'date': '', 'from': '', 'to': '', 'carrier': ''}, 'in': {'date': '', 'from':'', 'to': '', 'carrier':''}}))
     origin = id_finder(list[0])
     destination = id_finder(list[1])
-    outbounddate = list[2][:10]
+    
     
     if origin == None or destination == None:
         return 'Yanlis konum bilgisi'
