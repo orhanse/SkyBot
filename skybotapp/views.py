@@ -236,6 +236,8 @@ def flight(list):
             
                 if roundTrip==True and data['Carriers'][j]['CarrierId']==data['Quotes'][i]['InboundLeg']['CarrierIds'][0]:
                     result['in']['carrier'] = data['Carriers'][j]['Name']
+        break
+    
     pprint('flight result: ' + str(result))
     printout = 'The cheapest flight according to informaiton you gave: from' + result['out']['from'] + 'to' + result['out']['to'] + 'on' + result['out']['date'] + 'and return is on' + result['in']['date'] + 'for $ ' + str(result['price'])
     pprint('flight sonu: ' + str(printout))
