@@ -220,7 +220,7 @@ def flight(list):
             if roundTrip == True:
                 result['in']['date'] = str(data['Quotes'][i]['InboundLeg']['DepartureDate'])[:10]
             for j in range(0, len('Places')):
-            
+                pprint('j= ' + str(j))
                 if data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['OutboundLeg']['OriginId']:
                     result['out']['from'] = data['Places'][j]['Name']
                 if data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['OutboundLeg']['DestinationId']:
