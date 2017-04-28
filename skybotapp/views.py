@@ -217,7 +217,7 @@ def flight(list):
             result['price']=data['Quotes'][i]['MinPrice']
             result['out']['date']=str(data['Quotes'][i]['OutboundLeg']['DepartureDate'])[:10]
             result['direct'] = data['Quotes'][i]['Direct']
-            if roundtrip == True:
+            if roundTrip == True:
                 result['in']['date'] = str(data['Quotes'][i]['InboundLeg']['DepartureDate'])[:10]
             for j in range(0, len('Places')):
             
@@ -225,16 +225,16 @@ def flight(list):
                     result['out']['from'] = data['Places'][j]['Name']
                 if data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['OutboundLeg']['DestinationId']:
                     result['out']['to'] = data['Places'][j]['Name']
-                if roundtrip == True and data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['InboundLeg']['OriginId']:
+                if roundTrip == True and data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['InboundLeg']['OriginId']:
                     result['in']['from'] = data['Places'][j]['Name']
-                if roundtrip == True and data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['InboundLeg']['DestinationId']:
+                if roundTrip == True and data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['InboundLeg']['DestinationId']:
                     result['in']['to'] = data['Places'][j]['Name']
                     
             for j in range(0, len(data['Carriers'])):     # CARRIER NAMES
                 if data['Carriers'][j]['CarrierId'] == data['Quotes'][i]['OutboundLeg']['CarrierIds'][0]:
                     result['out']['carrier'] = data['Carriers'][j]['Name']
             
-                if roundtrip==True and data['Carriers'][j]['CarrierId']==data['Quotes'][i]['InboundLeg']['CarrierIds'][0]:
+                if roundTrip==True and data['Carriers'][j]['CarrierId']==data['Quotes'][i]['InboundLeg']['CarrierIds'][0]:
                     result['in']['carrier'] = data['Carriers'][j]['Name']
     pprint('flight result: ' + str(result))
     printout = 'The cheapest flight according to informaiton you gave: from' + result['out']['from'] + 'to' + result['out']['to'] + 'on' + result['out']['date'] + 'and return is on' + result['in']['date'] + 'for $ ' + str(result['price'])
