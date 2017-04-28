@@ -184,14 +184,14 @@ def homeView(request):
 
 def flight(list):
     
-    if list[3] == None: # j yap bunu
+    if list[2] == 'j': # j yap bunu
         inbounnddate == ''
         roundTrip = True
     else:
-        inbounddate = str(list[4][:10])
+        inbounddate = str(list[3][:10])
         roundTrip = False
         
-    if list[2] == None: # tarih nasil yolluyor
+    if list[2] == 'j': # tarih nasil yolluyor
         list[2] = str(datetime.date.today())
         
     result = json.loads(json.dumps({'price': 0, 'out': {'date': '', 'from': '', 'to': '', 'carrier': ''}, 'in': {'date': '', 'from':'', 'to': '', 'carrier':''}}))
