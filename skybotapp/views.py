@@ -204,7 +204,7 @@ def flight(input):
     data=query.json()
     
     pprint(str(data))
-    if len(data['Quotes']) == 0:
+    if len(data['Quotes']) or not 'Quotes' in data == 0:
         pprint('ERROR 1 = ' + str(data))
         return 'There is no flight for these parameters'
     
