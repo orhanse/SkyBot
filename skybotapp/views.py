@@ -183,48 +183,46 @@ def homeView(request):
     return HttpResponse('Hello')
 
 def flight(list):
-    pprint('flight basi: ' + str(list))
-    if list[2] == 'j': # tarih nasil yolluyor
-        list[2] = str(datetime.date.today())
-        
-    if list[3] == 'j': # j yap bunu
+    pprint('CHEAPEST')
+    pprint('query = ' + str(query))
+    
+    result = json.loads(json.dumps({'price': 0, 'out': {'date': '', 'from': '', 'to': '', 'carrier': ''}, 'in': {'date': '', 'from':'', 'to': '', 'carrier':''}}))
+    
+    origin = id_finder(query[0])
+    destination = id_finder(query[1])
+    
+    if query[3] == 'j': # tek yon ise
+        outbounddate = str(query[2])[:10]
         inbounddate = ''
         roundTrip = False
-        outbounddate = list[2][:10]
-    else:
-        inbounddate = str(list[2][:10])
+    else:   # cift yon ise    # tarihlerin yerleri degistirildi
+        outbounddate = str(query[3])[:10]
+        inbounddate = str(query[2])[:10]
         roundTrip = True
-        outbounddate = str(list[3][:10])
-        
-    
-        
-    result = json.loads(json.dumps({'price': 0, 'out': {'date': '', 'from': '', 'to': '', 'carrier': ''}, 'in': {'date': '', 'from':'', 'to': '', 'carrier':''}}))
-    origin = id_finder(list[0])
-    destination = id_finder(list[1])
     
     
-    if origin == None or destination == None:
-        return 'Yanlis konum bilgisi'
+    pprint('Kontrol 1 = ' + origin + ' ' + destination + ' ' + outbounddate + ' ' + inbounddate)
     
-    if len(inbounddate)!=0 and (len(outbounddate) != len(inbounddate)):   # date kontrolu 
-        return 'Girilen tarihler uyumsuz'
-    pprint('kontrol=  ' + origin + destination + outbounddate + inbounddate)
     query=requests.get('http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/tr/try/tr/'+origin+'/'+destination+'/'+outbounddate+'/'+inbounddate+'?apiKey=sk183163813532396485407386558735') 
     data=query.json()
-    pprint('SONUC = ' + str(data))
-    if len(data['Quotes']) == 0:  # Bu parametrelere uyan bir ucus yok.
-        return 'Parametrelere uygun sonuc bulunamadi'
-        
+    
+    pprint(str(data))
+    if len(data['Quotes']) == 0:
+        pprint('ERROR 1 = ' + str(data))
+        return 'Bu parametrelere uygun ucus yok'
+    
     for i in range(0, len(data['Quotes'])):
-        if (roundTrip and 'InboundLeg' in data['Quotes'][i]) or (not roundTrip and not 'InboundLeg' in data['Quotes'][i]):
-        
+        if (roundTrip  and 'InboundLeg' in data['Quotes'][i]) or (not roundTrip  and (not 'InboundLeg' in data['Quotes'][i])):
+            pprint('Kontrol 2 = ' + str(data['Quotes'][i]['QuoteId']))
+            
             result['price']=data['Quotes'][i]['MinPrice']
             result['out']['date']=str(data['Quotes'][i]['OutboundLeg']['DepartureDate'])[:10]
-            result['direct'] = data['Quotes'][i]['Direct']
-            if roundTrip == True:
+            
+            if roundTrip:
                 result['in']['date'] = str(data['Quotes'][i]['InboundLeg']['DepartureDate'])[:10]
+            pprint('Kontrol 3 = ' + str(result))
+            
             for j in range(0, len(data['Places'])):
-                pprint('j= ' + str(j))
                 if data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['OutboundLeg']['OriginId']:
                     result['out']['from'] = data['Places'][j]['Name']
                 if data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['OutboundLeg']['DestinationId']:
@@ -233,21 +231,22 @@ def flight(list):
                     result['in']['from'] = data['Places'][j]['Name']
                 if roundTrip == True and data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['InboundLeg']['DestinationId']:
                     result['in']['to'] = data['Places'][j]['Name']
-                    
+            
             for j in range(0, len(data['Carriers'])):     # CARRIER NAMES
                 if data['Carriers'][j]['CarrierId'] == data['Quotes'][i]['OutboundLeg']['CarrierIds'][0]:
                     result['out']['carrier'] = data['Carriers'][j]['Name']
             
                 if roundTrip==True and data['Carriers'][j]['CarrierId']==data['Quotes'][i]['InboundLeg']['CarrierIds'][0]:
                     result['in']['carrier'] = data['Carriers'][j]['Name']
-        break
-    pprint('flight result: ' + str(result))
-    if result['price'] ==  0:
-        printout =  'Parametrelere uygun sonuc bulunamadi'
+            break
+        
+    pprint('Kontrol 4 = ' + str(result))
+    
+    if roundTrip:
+        printOut = 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' and return is on ' + result['in']['date'] + ' with ' + result['in']['carrier'] + ' for ' + str(result['price']) + ' tl'
     else:
-        printout = 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' and return is on ' + result['in']['date'] + ' for ' + str(result['price']) + ' tl'
-    pprint('flight sonu: ' + str(printout))
-    return printout
+        printOut = 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' for ' + str(result['price']) + ' tl'
+    return str(printOut)
 
 def id_finder(place):
     result=requests.get('http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/tr/TRY/en-US?query='+place+'&apiKey=sk183163813532396485407386558735')
