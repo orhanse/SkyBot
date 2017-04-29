@@ -184,20 +184,20 @@ def homeView(request):
 
 def flight(query):
     pprint('CHEAPEST')
-    pprint('query = ' + str(query))
+    pprint('query = ' + str(list))
     
     result = json.loads(json.dumps({'price': 0, 'out': {'date': '', 'from': '', 'to': '', 'carrier': ''}, 'in': {'date': '', 'from':'', 'to': '', 'carrier':''}}))
     
-    origin = id_finder(query[0])
-    destination = id_finder(query[1])
+    origin = id_finder(list[0])
+    destination = id_finder(list[1])
     
-    if query[3] == 'j': # tek yon ise
-        outbounddate = str(query[2])[:10]
+    if list[3] == 'j': # tek yon ise
+        outbounddate = str(list[2])[:10]
         inbounddate = ''
         roundTrip = False
     else:   # cift yon ise    # tarihlerin yerleri degistirildi
-        outbounddate = str(query[3])[:10]
-        inbounddate = str(query[2])[:10]
+        outbounddate = str(list[3])[:10]
+        inbounddate = str(list[2])[:10]
         roundTrip = True
     
     
@@ -212,7 +212,7 @@ def flight(query):
         return 'Bu parametrelere uygun ucus yok'
     
     for i in range(0, len(data['Quotes'])):
-        if (roundTrip  and 'InboundLeg' in data['Quotes'][i]) or (not roundTrip  and (not 'InboundLeg' in data['Quotes'][i])):
+        if ('OutboundLeg' in data['Quotes'][i]) and (roundTrip  and 'InboundLeg' in data['Quotes'][i]) or (not roundTrip  and not 'InboundLeg' in data['Quotes'][i]):
             pprint('Kontrol 2 = ' + str(data['Quotes'][i]['QuoteId']))
             
             result['price']=data['Quotes'][i]['MinPrice']
@@ -239,6 +239,8 @@ def flight(query):
                 if roundTrip==True and data['Carriers'][j]['CarrierId']==data['Quotes'][i]['InboundLeg']['CarrierIds'][0]:
                     result['in']['carrier'] = data['Carriers'][j]['Name']
             break
+        else:
+            return 'Bu parametrelere uygun ucus yok'            
         
     pprint('Kontrol 4 = ' + str(result))
     
