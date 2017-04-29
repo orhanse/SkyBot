@@ -182,22 +182,22 @@ def checkArray(array):
 def homeView(request):
     return HttpResponse('Hello')
 
-def flight(list):
+def flight(input):
     pprint('CHEAPEST')
-    pprint('query = ' + str(list))
+    pprint('query = ' + str(input))
     
     result = json.loads(json.dumps({'price': 0, 'out': {'date': '', 'from': '', 'to': '', 'carrier': ''}, 'in': {'date': '', 'from':'', 'to': '', 'carrier':''}}))
     
-    origin = id_finder(list[0])
-    destination = id_finder(list[1])
+    origin = id_finder(input[0])
+    destination = id_finder(input[1])
     
-    if list[3] == 'j': # tek yon ise
-        outbounddate = str(list[2])[:10]
+    if input[3] == 'j': # tek yon ise
+        outbounddate = str(input[2])[:10]
         inbounddate = ''
         roundTrip = False
     else:   # cift yon ise    # tarihlerin yerleri degistirildi
-        outbounddate = str(list[3])[:10]
-        inbounddate = str(list[2])[:10]
+        outbounddate = str(input[3])[:10]
+        inbounddate = str(input[2])[:10]
         roundTrip = True
     
     
@@ -239,15 +239,57 @@ def flight(list):
                 if roundTrip==True and data['Carriers'][j]['CarrierId']==data['Quotes'][i]['InboundLeg']['CarrierIds'][0]:
                     result['in']['carrier'] = data['Carriers'][j]['Name']
             break
-        else:
-            return 'Bu parametrelere uygun ucus yok'            
+    
+    if result['price'] == 0:
+        out = False
+        back = False 
+        for i in range(0, len(data['Quotes'])):
+            if out == False and 'OutboundLeg' in data['Quotes'][i] and not 'InboundLeg' in data['Quotes'][i]:
+                out = True
+                result['out']['date']=str(data['Quotes'][i]['OutboundLeg']['DepartureDate'])[:10]
+                for j in range(0, len(data['Places'])):
+                    if data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['OutboundLeg']['OriginId']:
+                        result['out']['from'] = data['Places'][j]['Name']
+                    if data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['OutboundLeg']['DestinationId']:
+                        result['out']['to'] = data['Places'][j]['Name']
+                for j in range(0, len(data['Carriers'])):
+                    if data['Carriers'][j]['CarrierId'] == data['Quotes'][i]['OutboundLeg']['CarrierIds'][0]:
+                        result['out']['carrier'] = data['Carriers'][j]['Name']
+                result['price'] = data['Quotes'][i]['MinPrice']
+            
+            if roundTrip == False:
+                break
+            
+            elif back == False and not 'OutboundLeg' in data['Quotes'][i] and 'InboundLeg' in data['Quotes'][i]:
+                back = True
+                result['in']['date']=str(data['Quotes'][i]['InboundLeg']['DepartureDate'])[:10]
+                for j in range(0, len(data['Places'])):
+                    if data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['InboundLeg']['OriginId']:
+                        result['out']['from'] = data['Places'][j]['Name']
+                    if data['Places'][j]['Type'] == 'Station' and data['Places'][j]['PlaceId'] == data['Quotes'][i]['InboundLeg']['DestinationId']:
+                        result['out']['to'] = data['Places'][j]['Name']
+                for j in range(0, len(data['Carriers'])):
+                    if data['Carriers'][j]['CarrierId'] == data['Quotes'][i]['InboundLeg']['CarrierIds'][0]:
+                        result['out']['carrier'] = data['Carriers'][j]['Name']
+                
+                result['price'] = result['price'] + data['Quotes'][i]['MinPrice']
+        
         
     pprint('Kontrol 4 = ' + str(result))
     
-    if roundTrip:
+    if result['out']['date'] != '' and result['in']['date'] != '':
         printOut = 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' and return is on ' + result['in']['date'] + ' with ' + result['in']['carrier'] + ' for ' + str(result['price']) + ' tl'
-    else:
+    elif result['out']['date'] == '' and result['in']['date'] == '':
+        printOut = 'Parametrelere uygun sonuc bulunamadi'
+    elif not roundTrip and result['out']['date'] != '':
         printOut = 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' for ' + str(result['price']) + ' tl'
+    elif not roundTrip and result['out']['date'] == '':
+        printOut = 'Parametrelere  uygun tek yon gidis bulunamadi'
+    elif roundTrip and result['out']['date'] == '' and result['in']['date'] != '':
+        printOut = 'Parametrelere uygun gidis yonu bulanamadi. Donus yonu icin: ' + 'The cheapest flight according to informaiton you gave: from ' + result['in']['from'] + ' to ' + result['in']['to'] + ' on ' + result['in']['date'] + ' with ' + result['in']['carrier'] + ' for ' + str(result['price']) + ' tl'
+    elif roundTrip and result['out']['date'] != '' and result['in']['date'] == '':
+        printOut = 'Parametrelere uygun donus yonu bulanamadi. Gidis yonu icin: ' + 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' for ' + str(result['price']) + ' tl'
+        
     return str(printOut)
 
 def id_finder(place):
