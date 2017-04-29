@@ -188,11 +188,11 @@ def flight(input):
     origin = id_finder(input[0])
     destination = id_finder(input[1])
     
-    if input[3] == 'j': 
+    if input[3] == 'j': # tek yon ise
         outbounddate = str(input[2])[:10]
         inbounddate = ''
         roundTrip = False
-    else:   
+    else:   # cift yon ise    # tarihlerin yerleri degistirildi
         outbounddate = str(input[3])[:10]
         inbounddate = str(input[2])[:10]
         roundTrip = True
@@ -206,7 +206,7 @@ def flight(input):
     pprint(str(data))
     if len(data['Quotes']) == 0:
         pprint('ERROR 1 = ' + str(data))
-        return 'There is no appropriate flight for parameters you entered.'
+        return 'There is no flight for these parameters'
     
     for i in range(0, len(data['Quotes'])):
         if ('OutboundLeg' in data['Quotes'][i]) and (roundTrip  and 'InboundLeg' in data['Quotes'][i]) or (not roundTrip  and not 'InboundLeg' in data['Quotes'][i]):
@@ -277,15 +277,15 @@ def flight(input):
     if result['out']['date'] != '' and result['in']['date'] != '':
         printOut = 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' and return is on ' + result['in']['date'] + ' with ' + result['in']['carrier'] + ' for ' + str(result['price']) + ' tl'
     elif result['out']['date'] == '' and result['in']['date'] == '':
-        printOut = 'There is no appropriate flight for the parameters you entered'
+        printOut = 'There is no flight for these parameters'
     elif not roundTrip and result['out']['date'] != '':
         printOut = 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' for ' + str(result['price']) + ' tl'
     elif not roundTrip and result['out']['date'] == '':
-        printOut = 'There is no appropriate one way flight for the parameters you entered'
+        printOut = 'There is no flight for one way with these parameters '
     elif roundTrip and result['out']['date'] == '' and result['in']['date'] != '':
-        printOut = 'There is no appropriate flight for source to destination with the parameters you entered. For return path ' + 'The cheapest flight according to informaiton you gave: from ' + result['in']['from'] + ' to ' + result['in']['to'] + ' on ' + result['in']['date'] + ' with ' + result['in']['carrier'] + ' for ' + str(result['price']) + ' tl'
+        printOut = 'There is no flight for outbound with these parameters. Return way: ' + 'The cheapest flight according to informaiton you gave: from ' + result['in']['from'] + ' to ' + result['in']['to'] + ' on ' + result['in']['date'] + ' with ' + result['in']['carrier'] + ' for ' + str(result['price']) + ' tl'
     elif roundTrip and result['out']['date'] != '' and result['in']['date'] == '':
-        printOut = 'There is no appropriate flight for destination to source with the parameters you entered. For going path' + 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' for ' + str(result['price']) + ' tl'
+        printOut = 'There is no flight for return way with these parameters.. Outbound: ' + 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' for ' + str(result['price']) + ' tl'
         
     return str(printOut)
 
