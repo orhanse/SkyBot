@@ -187,6 +187,8 @@ def flight(input):
     
     origin = id_finder(input[0])
     destination = id_finder(input[1])
+    if origin == '' or destination == '':
+        return 'wrong parameter'
     
     if input[3] == 'j': # tek yon ise
         outbounddate = str(input[2])[:10]
