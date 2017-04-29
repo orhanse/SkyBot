@@ -182,7 +182,7 @@ def checkArray(array):
 def homeView(request):
     return HttpResponse('Hello')
 
-def flight(query):
+def flight(list):
     pprint('CHEAPEST')
     pprint('query = ' + str(list))
     
