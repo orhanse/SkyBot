@@ -100,10 +100,7 @@ class SkyBotView(generic.View):
                             if check == 1 or 'greeting' in resp['entities'] or 'bye' in resp['entities'] or 'reset' in resp['entities']:
                                 client.run_actions(message['sender']['id'], message['message']['text'])
                             else:
-                                #if strResp == 'done':
-                                 #   botDB.objects.get(userId = message['sender']['id']).delete()
-                                  #  post_facebook_message(message['sender']['id'],str(array))
-                                #else:
+
                                 post_facebook_message(message['sender']['id'],str(strResp))
 
                                  
@@ -166,7 +163,7 @@ def parseWitData(witOut,senderID):
             return 'Please enter the time you want to fly'
         pprint(str(array))
         return flight(array)
-        #return 'done'
+   
     
                     
                  
@@ -191,11 +188,11 @@ def flight(input):
     origin = id_finder(input[0])
     destination = id_finder(input[1])
     
-    if input[3] == 'j': # tek yon ise
+    if input[3] == 'j': 
         outbounddate = str(input[2])[:10]
         inbounddate = ''
         roundTrip = False
-    else:   # cift yon ise    # tarihlerin yerleri degistirildi
+    else:   
         outbounddate = str(input[3])[:10]
         inbounddate = str(input[2])[:10]
         roundTrip = True
@@ -209,7 +206,7 @@ def flight(input):
     pprint(str(data))
     if len(data['Quotes']) == 0:
         pprint('ERROR 1 = ' + str(data))
-        return 'Bu parametrelere uygun ucus yok'
+        return 'There is no appropriate flight for parameters you entered.'
     
     for i in range(0, len(data['Quotes'])):
         if ('OutboundLeg' in data['Quotes'][i]) and (roundTrip  and 'InboundLeg' in data['Quotes'][i]) or (not roundTrip  and not 'InboundLeg' in data['Quotes'][i]):
@@ -280,22 +277,22 @@ def flight(input):
     if result['out']['date'] != '' and result['in']['date'] != '':
         printOut = 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' and return is on ' + result['in']['date'] + ' with ' + result['in']['carrier'] + ' for ' + str(result['price']) + ' tl'
     elif result['out']['date'] == '' and result['in']['date'] == '':
-        printOut = 'Parametrelere uygun sonuc bulunamadi'
+        printOut = 'There is no appropriate flight for the parameters you entered'
     elif not roundTrip and result['out']['date'] != '':
         printOut = 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' for ' + str(result['price']) + ' tl'
     elif not roundTrip and result['out']['date'] == '':
-        printOut = 'Parametrelere  uygun tek yon gidis bulunamadi'
+        printOut = 'There is no appropriate one way flight for the parameters you entered'
     elif roundTrip and result['out']['date'] == '' and result['in']['date'] != '':
-        printOut = 'Parametrelere uygun gidis yonu bulanamadi. Donus yonu icin: ' + 'The cheapest flight according to informaiton you gave: from ' + result['in']['from'] + ' to ' + result['in']['to'] + ' on ' + result['in']['date'] + ' with ' + result['in']['carrier'] + ' for ' + str(result['price']) + ' tl'
+        printOut = 'There is no appropriate flight for source to destination with the parameters you entered. For return path ' + 'The cheapest flight according to informaiton you gave: from ' + result['in']['from'] + ' to ' + result['in']['to'] + ' on ' + result['in']['date'] + ' with ' + result['in']['carrier'] + ' for ' + str(result['price']) + ' tl'
     elif roundTrip and result['out']['date'] != '' and result['in']['date'] == '':
-        printOut = 'Parametrelere uygun donus yonu bulanamadi. Gidis yonu icin: ' + 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' for ' + str(result['price']) + ' tl'
+        printOut = 'There is no appropriate flight for destination to source with the parameters you entered. For going path' + 'The cheapest flight according to informaiton you gave: from ' + result['out']['from'] + ' to ' + result['out']['to'] + ' on ' + result['out']['date'] + ' with ' + result['out']['carrier'] + ' for ' + str(result['price']) + ' tl'
         
     return str(printOut)
 
 def id_finder(place):
     result=requests.get('http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/tr/TRY/en-US?query='+place+'&apiKey=sk183163813532396485407386558735')
     record=result.json()
-    if(len(record['Places'])==0): # boyle bir yer var mi?
+    if(len(record['Places'])==0): 
         return None
     name=record['Places'][0]['PlaceId']
     return str(name)

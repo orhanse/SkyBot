@@ -15,11 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from skyscannerapp import views
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^skybotapp/', include('skybotapp.urls')),
     url(r'^', include('skybotapp.urls')),
-    url(r'^skyscannerapp$',views.flight, name='flight') 
 ]
