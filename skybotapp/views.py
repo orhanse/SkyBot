@@ -184,7 +184,7 @@ def homeView(request):
 
 def flight(list):
     pprint('CHEAPEST')
-    pprint('query = ' + str(query))
+    #pprint('query = ' + str(query))
     
     result = json.loads(json.dumps({'price': 0, 'out': {'date': '', 'from': '', 'to': '', 'carrier': ''}, 'in': {'date': '', 'from':'', 'to': '', 'carrier':''}}))
     
