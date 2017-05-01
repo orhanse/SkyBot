@@ -46,7 +46,7 @@ def witConnect(incoming_message,userID):
         pprint('Yay, got Wit.ai response: ' + str(resp))
         if 'reset' in resp['entities']:
             try:
-                 lastMessage = botDB.objects.get(userId = userID)
+                 lastMessage = botDB.objects.get(userId = userID).last()
                  botDB.objects.get(userId = userID).delete()
             except botDB.DoesNotExist:
                  lastMessage = None
@@ -83,7 +83,7 @@ class SkyBotView(generic.View):
                             strResp = parseWitData(resp,message['sender']['id'])
                             array = ['j','j','j','j']
                             try:
-                                lastMessage = botDB.objects.get(userId = message['sender']['id'])
+                                lastMessage = botDB.objects.get(userId = message['sender']['id']).last()
                                 if lastMessage.firstLocation != None:
                                     array[0] = lastMessage.firstLocation
                                 if lastMessage.secondLocation != None:
@@ -112,7 +112,7 @@ class SkyBotView(generic.View):
 def parseWitData(witOut,senderID):
         array = ['j','j','j','j']
         try:
-            lastMessage = botDB.objects.get(userId = senderID)
+            lastMessage = botDB.objects.get(userId = senderID).last()
             if lastMessage.firstLocation != None:
                 array[0] = lastMessage.firstLocation
             if lastMessage.secondLocation != None:
