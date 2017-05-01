@@ -46,8 +46,9 @@ def witConnect(incoming_message,userID):
         pprint('Yay, got Wit.ai response: ' + str(resp))
         if 'reset' in resp['entities']:
             try:
-                 lastMessage = botDB.objects.filter(userId = userID).last()
-                 botDB.objects.get(userId = userID).delete()
+                lastMessage = botDB.objects.filter(userId = userID).last()
+                if lastMessage!= None:
+                    botDB.objects.get(userId = userID).delete()
             except botDB.DoesNotExist:
                  lastMessage = None
        
@@ -84,14 +85,15 @@ class SkyBotView(generic.View):
                             array = ['j','j','j','j']
                             try:
                                 lastMessage = botDB.objects.filter(userId = message['sender']['id']).last()
-                                if lastMessage.firstLocation != None:
-                                    array[0] = lastMessage.firstLocation
-                                if lastMessage.secondLocation != None:
-                                    array[1] = lastMessage.secondLocation
-                                if lastMessage.firstDate != None:
-                                    array[2] = lastMessage.firstDate
-                                if lastMessage.secondDate != None:
-                                    array[3] = lastMessage.secondDate
+                                if lastMessage!= None:  
+                                    if lastMessage.firstLocation != None:
+                                        array[0] = lastMessage.firstLocation
+                                    if lastMessage.secondLocation != None:
+                                        array[1] = lastMessage.secondLocation
+                                    if lastMessage.firstDate != None:
+                                        array[2] = lastMessage.firstDate
+                                    if lastMessage.secondDate != None:
+                                        array[3] = lastMessage.secondDate
                             except botDB.DoesNotExist:
                                 lastMessage = None
                             check = checkArray(array)
@@ -119,14 +121,15 @@ def parseWitData(witOut,senderID):
         array = ['j','j','j','j']
         try:
             lastMessage = botDB.objects.filter(userId = senderID).last()
-            if lastMessage.firstLocation != None:
-                array[0] = lastMessage.firstLocation
-            if lastMessage.secondLocation != None:
-                array[1] = lastMessage.secondLocation
-            if lastMessage.firstDate != None:
-                array[2] = lastMessage.firstDate
-            if lastMessage.secondDate != None:
-                array[3] = lastMessage.secondDate
+            if lastMessage!= None:
+                if lastMessage.firstLocation != None:
+                    array[0] = lastMessage.firstLocation
+                if lastMessage.secondLocation != None:
+                    array[1] = lastMessage.secondLocation
+                if lastMessage.firstDate != None:
+                    array[2] = lastMessage.firstDate
+                if lastMessage.secondDate != None:
+                    array[3] = lastMessage.secondDate
         except botDB.DoesNotExist:
             lastMessage = None
             
