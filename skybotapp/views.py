@@ -46,7 +46,7 @@ def witConnect(incoming_message,userID):
         pprint('Yay, got Wit.ai response: ' + str(resp))
         if 'reset' in resp['entities']:
             try:
-                 lastMessage = botDB.objects.get(userId = userID).last()
+                 lastMessage = botDB.objects.filter(userId = userID).last()
                  botDB.objects.get(userId = userID).delete()
             except botDB.DoesNotExist:
                  lastMessage = None
@@ -83,7 +83,7 @@ class SkyBotView(generic.View):
                             strResp = parseWitData(resp,message['sender']['id'])
                             array = ['j','j','j','j']
                             try:
-                                lastMessage = botDB.objects.get(userId = message['sender']['id']).last()
+                                lastMessage = botDB.objects.filter(userId = message['sender']['id']).last()
                                 if lastMessage.firstLocation != None:
                                     array[0] = lastMessage.firstLocation
                                 if lastMessage.secondLocation != None:
@@ -100,7 +100,13 @@ class SkyBotView(generic.View):
                             if check == 1 or 'greeting' in resp['entities'] or 'bye' in resp['entities'] or 'reset' in resp['entities']:
                                 client.run_actions(message['sender']['id'], message['message']['text'])
                             else:
-
+                                if strResp == 'done':
+                                    strResp = flight(array)
+                                    try:
+                                        botDB.objects.filter(userId = message['sender']['id']).delete()
+                                    except botDB.DoesNotExist:
+                                        pprint('no record')
+                                        
                                 post_facebook_message(message['sender']['id'],str(strResp))
 
                                  
@@ -112,7 +118,7 @@ class SkyBotView(generic.View):
 def parseWitData(witOut,senderID):
         array = ['j','j','j','j']
         try:
-            lastMessage = botDB.objects.get(userId = senderID).last()
+            lastMessage = botDB.objects.filter(userId = senderID).last()
             if lastMessage.firstLocation != None:
                 array[0] = lastMessage.firstLocation
             if lastMessage.secondLocation != None:
@@ -147,7 +153,7 @@ def parseWitData(witOut,senderID):
             else:
                 array[2] = str(witOut['entities']['datetime'][0]['values'][0]['value'])
         try:
-            botDB.objects.get(userId = senderID).delete()
+            botDB.objects.filter(userId = senderID).delete()
         except botDB.DoesNotExist:
             pprint('no record')
         newMessage = botDB(userId = senderID,firstLocation=array[0],secondLocation=array[1],firstDate=array[2],secondDate=array[3])
@@ -162,7 +168,7 @@ def parseWitData(witOut,senderID):
             pprint(str(array))
             return 'Please enter the time you want to fly'
         pprint(str(array))
-        return flight(array)
+        return 'done'
    
     
                     
